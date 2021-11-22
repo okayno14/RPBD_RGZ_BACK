@@ -1,5 +1,7 @@
 import Phonebook.controller.Controller;
+import Phonebook.model.*;
 import Phonebook.view.Console;
+
 
 public class Main
 {
@@ -9,6 +11,5 @@ public class Main
         Console cli = new Console(controller);
         controller.setView(cli);
         cli.run();
-
     }
 }
