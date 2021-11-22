@@ -17,5 +17,5 @@ public class Console extends View
         System.out.println("Hello World!");
     }
 
-    public void foo() {}
+
 }
