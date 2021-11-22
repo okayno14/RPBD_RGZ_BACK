@@ -12,7 +12,6 @@ public interface Phonebook {
     void addPhone(Person p, PhoneNumber pn);
     void changePhone(Person p,PhoneNumber oldPn,PhoneNumber newPn);
     void deletePhone(Person p, PhoneNumber pn);
-    void addAddress(Person p, Address add);
     void changeAddress(Person p, Address add);
     void deleteAddress(Person p);
     void findFIOALL(String lastName,String firstName, String fatherName);
