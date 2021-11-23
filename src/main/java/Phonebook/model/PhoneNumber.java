@@ -3,6 +3,7 @@ package Phonebook.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -19,13 +20,13 @@ public class PhoneNumber implements Serializable, Comparable<PhoneNumber>
     PhoneType phoneType;
 
     @ManyToMany(mappedBy = "phoneNumberSet")
-    HashSet<Person> personHashSet;
+    Set<Person> personHashSet;
 
     public PhoneNumber(PhoneType pt, String number)
     {
         this.phoneType = pt;
         this.number = number;
-        personHashSet = new HashSet<Person>();
+        //personHashSet = new HashSet<Person>();
     }
 
     @Override
@@ -37,5 +38,18 @@ public class PhoneNumber implements Serializable, Comparable<PhoneNumber>
         )
             return 0;
         else return 2;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if(!(o instanceof PhoneNumber))
+            return false;
+
+        PhoneNumber phoneNumber = (PhoneNumber) o;
+
+        if(this.compareTo(phoneNumber)==0)
+            return true;
+        else return false;
     }
 }

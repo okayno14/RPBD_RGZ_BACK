@@ -5,7 +5,7 @@ import Phonebook.controller.Phonebook;
 
 public class Console extends View
 {
-    Phonebook userInterface;
+    public Phonebook userInterface;
 
     public Console(Controller con)
     {

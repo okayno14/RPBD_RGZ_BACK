@@ -43,4 +43,17 @@ public class PhoneType implements Serializable, Comparable<PhoneType>
     {
         return typename.compareTo(phoneType.typename);
     }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if(!(o instanceof PhoneType))
+            return false;
+
+        PhoneType phoneType = (PhoneType) o;
+
+        if(this.compareTo(phoneType)==0)
+            return true;
+        return false;
+    }
 }

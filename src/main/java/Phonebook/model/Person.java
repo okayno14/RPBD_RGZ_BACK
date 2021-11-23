@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 
 @Entity
@@ -25,14 +26,14 @@ public class Person implements Serializable, Comparable<Person>
     @JoinTable(name = "persone_number",
     joinColumns = {@JoinColumn(name = "idperson")},
     inverseJoinColumns = {@JoinColumn(name = "idphone")})
-    HashSet<PhoneNumber> phoneNumberSet;
+    Set<PhoneNumber> phoneNumberSet;
 
     public Person(String lastname, String firstname, String fathername)
     {
         this.lastname=lastname;
         this.firstname=firstname;
         this.fathername = fathername;
-        phoneNumberSet = new HashSet<PhoneNumber>();
+        //phoneNumberSet = new HashSet<PhoneNumber>();
     }
 
     @Override
@@ -58,6 +59,19 @@ public class Person implements Serializable, Comparable<Person>
         if(flag==0 && flag2)
             return 0;
         else return 2;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if(!(o instanceof Person))
+            return false;
+
+        Person person = (Person) o;
+
+        if (this.compareTo(person)==0)
+            return true;
+        else return false;
     }
 
     //public для теста, вместо модификатора по умолчанию

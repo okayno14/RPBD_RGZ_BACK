@@ -3,6 +3,7 @@ package Phonebook.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Address implements Serializable, Comparable<Address>
@@ -18,7 +19,7 @@ public class Address implements Serializable, Comparable<Address>
     Street street;
 
     @OneToMany(mappedBy = "address")
-    HashSet<Person> personHashSet;
+    Set<Person> personHashSet;
 
     public Address(Street street, int home, int app)
     {
@@ -49,4 +50,17 @@ public class Address implements Serializable, Comparable<Address>
     public int getHome() {return home;}
     public int getAppartement() {return appartement;}
     public Street getStreet() {return new Street(street);}
+
+    @Override
+    public boolean equals(Object o)
+    {
+       if(!(o instanceof Address))
+           return false;
+
+       Address address = (Address) o;
+
+        if(this.compareTo(address)==0)
+           return true;
+        else return false;
+    }
 }
