@@ -88,6 +88,8 @@ public abstract class View
         {
             if (os.contains("Windows"))
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            else if (os.contains("Linux"))
+                new ProcessBuilder("/usr/bin/clear").inheritIO().start().waitFor();
             else
                 Runtime.getRuntime().exec("clear");
         }
