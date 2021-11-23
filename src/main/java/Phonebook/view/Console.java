@@ -12,6 +12,7 @@ public class Console extends View
     private Person currentPerson;
     private boolean flagRun;
     private int switchMenu;
+    private Scanner cur_in = new Scanner(System.in);
 
 
     public Console(Controller con){
@@ -36,33 +37,44 @@ public class Console extends View
                     }catch (Exception e){
 
                     }
-//                    in.next();
-//                    clr();
+                    messageEnter();
+                    cur_in.nextLine();
+                    clr();
                     break;
                 case 2:
                     clr();
                     try {
                         currentPerson = addContact();
-                        //if (toRunMenuTwo())
-                            //pcRun();
+                        if (toRunMenuTwo())
+                            pcRun();
 
                     }catch (Exception e){
                         System.out.println("Ошибка!");
                     }
-//                    clr();
+                    messageEnter();
+                    cur_in.nextLine();
+                    clr();
                     break;
                 case 3:
                     clr();
                     findBy4();
-
+                    messageEnter();
+                    cur_in.nextLine();
+                    clr();
                     break;
                 case 4:
                     clr();
                     findList_FIO();
+                    messageEnter();
+                    cur_in.nextLine();
+                    clr();
                     break;
                 default:
                     clr();
                     System.out.println("Очепятка");
+                    messageEnter();
+                    cur_in.nextLine();
+                    clr();
                     break;
             }
         }
@@ -123,6 +135,7 @@ public class Console extends View
                 case 7:
                     clr();
                     deleteContact();
+                    exitWhileLocal = false;
                     break;
                 case 8:
                     clr();
@@ -259,7 +272,7 @@ public class Console extends View
                 +"------------------------------------------------"
         );
         String nameStreet = get_a_addressName();
-        int numberHome = get_a_numberhome();
+        int numberHome = get_a_numberHome();
         int numberApartment = get_a_numberApartment();
         Address address = new Address(new Street(nameStreet),numberHome,numberApartment);
         userInterface.changeAddress(currentPerson,address);
