@@ -13,8 +13,7 @@ public class Controller implements Phonebook
     View ui;
     Model model;
 
-    public Controller()
-    {
+    public Controller(){
         try
         {
             model = new Model();
@@ -24,11 +23,9 @@ public class Controller implements Phonebook
             System.err.println("Ошибка подключения к БД. Переход в офлайн режим");
         }
     }
-
     public void setView(View ui) {this.ui = ui;}
 
     @Override
-
     public Person addContact(String lastName, String firstName, String fatherName)
     {
         Person p = new Person(lastName,firstName,fatherName);
@@ -89,8 +86,6 @@ public class Controller implements Phonebook
             throw exception;
         }
         return null;
-
-
     }
 
     @Override

@@ -37,7 +37,9 @@ public abstract class View
     public void drawPerson(Person person){
 
     }
-    public void drawAddress(Address address){}
+    public void drawAddress(Address address){
+
+    }
     public void drawPhoneNumber(PhoneNumber phoneNumber){//тут нужны проверки!
         if (phoneNumber != null){
             System.out.println(phoneNumber.getNumber());
@@ -65,8 +67,12 @@ public abstract class View
             return true;
         return false;
     }
-    protected void clr()
-    {
+    public boolean checkLine(String s){
+        if (s.length() <= 20)
+            return true;
+        return false;
+    }
+    protected void clr(){
         try
         {
             if (os.contains("Windows"))
@@ -79,7 +85,6 @@ public abstract class View
     protected void messageEnter(){
         System.out.println("Для продолжения нажмите клавишу Enter");
     }
-
 
     //методы для инпута данных
     public String get_a_Number(){
@@ -125,24 +130,45 @@ public abstract class View
         return number;
     }
     public String get_a_lastNamePerson(){
-        System.out.print(
-                "Введите фамилию контакта : "
-        );
-        String name = in.next();
-        return name;
-    }//нужно добавить проверку ввода кол-во 20 символов. Т.к в бд всего 20 допустимо символов
+        while (true){
+            System.out.print(
+                    "Введите фамилию контакта : "
+            );
+            String name = in.next();
+            if (checkLine(name))
+                return name;
+            else if (name.isEmpty())
+                System.out.println("Пустота не считается");
+            else
+                System.out.println("Вы ввели много символов");
+        }
+    }
     public String get_a_firstNamePerson(){
-        System.out.print(
-                "Введите имя контакта : "
-        );
-        String name = in.next();
-        return name;
-    }//
+        while (true) {
+            System.out.print(
+                    "Введите имя контакта : "
+            );
+            String name = in.next();
+            if (checkLine(name))
+                return name;
+            else if (name.isEmpty())
+                System.out.println("Пустота не считается");
+            else
+                System.out.println("У вас слишком длиное имя Желаетя поменять паспорт?)))(сарказм)");
+        }
+    }
     public String get_a_fatherNamePerson(){
-        System.out.print(
-                "Введите отчество контакта : "
-        );
-        String name = in.next();
-        return name;
-    }//
+        while (true) {
+            System.out.print(
+                    "Введите отчество контакта : "
+            );
+            String name = in.next();
+            if (checkLine(name))
+                return name;
+            else if (name.isEmpty())
+                System.out.println("Пустота не считается");
+            else
+                System.out.println("Вы ввели много символов");
+        }
+    }
 }

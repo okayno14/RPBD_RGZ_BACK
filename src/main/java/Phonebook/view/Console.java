@@ -14,12 +14,12 @@ public class Console extends View
     private int switchMenu;
     private Scanner cur_in = new Scanner(System.in);
 
-
     public Console(Controller con){
         userInterface = con;
         flagRun = true;
     }
 
+    //Обработчики меню
     public void run(){
         while (flagRun){
             Menu();
@@ -80,23 +80,6 @@ public class Console extends View
         }
 
     }
-    private boolean toRunMenuTwo(){
-        System.out.println(
-                "Желаете редактировать контакт?\n"
-                +"[1] - Да;   [0] - Нет;"
-        );
-        int tmp;
-        while (true){
-            tmp = in.nextInt();
-            if (tmp == 0)
-                return false;
-            else if (tmp == 1)
-                return true;
-            else
-                System.out.println("Очепятка");
-        }
-    }
-
     public void pcRun(){
         boolean exitWhileLocal = true;
         while (exitWhileLocal){
@@ -153,6 +136,7 @@ public class Console extends View
 
     }
 
+    //Отрисовка меню
     public void Menu() {
         System.out.println(
                 "\n\n"
@@ -188,6 +172,23 @@ public class Console extends View
         );
     }
 
+    //Методы, используемые обработчиками
+    private boolean toRunMenuTwo(){
+        System.out.println(
+                "Желаете редактировать контакт?\n"
+                        +"[1] - Да;   [0] - Нет;"
+        );
+        int tmp;
+        while (true){
+            tmp = in.nextInt();
+            if (tmp == 0)
+                return false;
+            else if (tmp == 1)
+                return true;
+            else
+                System.out.println("Очепятка");
+        }
+    }
     private Person findPerson(){
         System.out.println(
                 "------------------------------------------------\n"
@@ -209,7 +210,6 @@ public class Console extends View
 
         return p;
     }
-
     private Person addContact(){
         System.out.println(
                 "------------------------------------------------\n"
@@ -228,7 +228,6 @@ public class Console extends View
         }
         return p;
     }
-
     private void findBy4(){
         System.out.println(
                 "------------------------------------------------\n"
@@ -239,7 +238,6 @@ public class Console extends View
         System.out.print("Введите 4-е символа телефонного номера контакта :");
         //ввод 4 чмсел
     }
-
     private void findList_FIO(){
         System.out.println(
                 "------------------------------------------------\n"
@@ -251,7 +249,6 @@ public class Console extends View
         String father = get_a_fatherNamePerson();
         userInterface.findFIOALL(last,first,father);
     }
-
     private void updateFIOContact(){
         System.out.println(
                 "------------------------------------------------\n"
@@ -264,7 +261,6 @@ public class Console extends View
         Person person = new Person(last,first,father);
         userInterface.changeContact(person);
     }
-
     private void addAddress(){
         System.out.println(
                 "------------------------------------------------\n"
@@ -277,7 +273,6 @@ public class Console extends View
         Address address = new Address(new Street(nameStreet),numberHome,numberApartment);
         userInterface.changeAddress(currentPerson,address);
     }
-
     private void addPhoneNumber(){
         System.out.println(
                 "------------------------------------------------\n"
@@ -290,7 +285,6 @@ public class Console extends View
         PhoneNumber phoneNumber = new PhoneNumber(new PhoneType(type),number);
         userInterface.addPhone(currentPerson,phoneNumber);
     }
-
     private void updatePhoneNumber(){
         System.out.println(
                 "------------------------------------------------\n"
@@ -302,8 +296,6 @@ public class Console extends View
 //
 //        }
     }
-
-
     private void deletePhone(){
         System.out.println(
                 "------------------------------------------------\n"
@@ -312,7 +304,6 @@ public class Console extends View
         );
         // аналогично вышестоящему классу нужно тестить с бд.
     }
-
     private void deleteContact(){
         System.out.println(
                 "------------------------------------------------\n"
@@ -321,6 +312,4 @@ public class Console extends View
         );
         userInterface.deleteContact(currentPerson);
     }
-
-
 }
