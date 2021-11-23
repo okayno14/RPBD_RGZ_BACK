@@ -6,6 +6,7 @@ import Phonebook.model.PhoneNumber;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Set;
 
 //Абстрактный класс View для приложения
 //Можно будет создавать разные пользовательские интерфейсы и прикручивать их к контроллеру
@@ -37,7 +38,11 @@ public abstract class View
     }
     public void drawAddress(Address address){}
     public void drawPhoneNumber(PhoneNumber phoneNumber){}
-    public void drawPhoneNumbers(ArrayList<PhoneNumber> args){}
+    public void drawPhoneNumbers(Set<PhoneNumber> args){
+        if (args.size() > 0){
+
+        }
+    }
     public boolean checkFormat(String number){
 
         return false;
