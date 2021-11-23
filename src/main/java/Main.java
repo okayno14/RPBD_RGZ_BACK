@@ -12,9 +12,5 @@ public class Main
         Console cli = new Console(controller);
         controller.setView(cli);
         cli.run();
-
-        cli.userInterface.addContact("Vasily", "Vasilyevich","Topolev");
-
-
     }
 }

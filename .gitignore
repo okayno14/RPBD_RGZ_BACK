@@ -1,2 +1,4 @@
 /src/main/resources/hibernate.properties
 /target/
+/src/main/java/META-INF/
+/out/
