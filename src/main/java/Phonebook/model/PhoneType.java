@@ -38,6 +38,10 @@ public class PhoneType implements Serializable, Comparable<PhoneType>
         }
     }
 
+    public String getTypename() {
+        return typename;
+    }
+
     @Override
     public int compareTo(PhoneType phoneType)
     {

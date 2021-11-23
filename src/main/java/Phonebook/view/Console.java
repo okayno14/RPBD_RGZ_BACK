@@ -118,11 +118,20 @@ public class Console extends View
                     break;
                 case 6:
                     clr();
-
+                    deletePhone();
                     break;
                 case 7:
+                    clr();
+                    deleteContact();
+                    break;
                 case 8:
+                    clr();
+                    drawPhoneNumbers(currentPerson.getPhoneNumberSet());
+                    break;
                 case 9:
+                    clr();
+                    drawAddress(currentPerson.getAddress());
+                    break;
                 default:
                     System.out.println("Очепятка");
                     break;
@@ -281,7 +290,24 @@ public class Console extends View
 //        }
     }
 
-    private void deletePhone(){
 
+    private void deletePhone(){
+        System.out.println(
+                "------------------------------------------------\n"
+                        +"-------- Редактировать номер контакту ----------\n"
+                        +"------------------------------------------------"
+        );
+        // аналогично вышестоящему классу нужно тестить с бд.
     }
+
+    private void deleteContact(){
+        System.out.println(
+                "------------------------------------------------\n"
+                +"----------------| Удаление контакта |-----------\n"
+                +"------------------------------------------------"
+        );
+        userInterface.deleteContact(currentPerson);
+    }
+
+
 }

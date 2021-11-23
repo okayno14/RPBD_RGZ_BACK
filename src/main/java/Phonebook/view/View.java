@@ -5,6 +5,7 @@ import Phonebook.model.Person;
 import Phonebook.model.PhoneNumber;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -37,11 +38,23 @@ public abstract class View
 
     }
     public void drawAddress(Address address){}
-    public void drawPhoneNumber(PhoneNumber phoneNumber){}
+    public void drawPhoneNumber(PhoneNumber phoneNumber){//тут нужны проверки!
+        if (phoneNumber != null){
+            System.out.println(phoneNumber.getNumber());
+            System.out.println(phoneNumber.getPhoneType().getTypename());
+        }
+    }
     public void drawPhoneNumbers(Set<PhoneNumber> args){
         if (args.size() > 0){
-
+            Iterator<PhoneNumber> iterator = args.iterator();
+            for (int i = 0; i < args.size();i++){
+                System.out.print("["+ i + "] ");
+//                drawPhoneNumber(args.iterator().next());
+                //Нужно понять как вытащить элемент из сета по индексу
+            }
         }
+        else
+            System.out.println("\"Ошибка. Нет номеров.");
     }
     public boolean checkFormat(String number){
 
