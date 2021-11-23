@@ -45,8 +45,8 @@ public class Console extends View
                     clr();
                     try {
                         currentPerson = addContact();
-                        if (toRunMenuTwo())
-                            pcRun();
+                        //if (toRunMenuTwo())
+                            //pcRun();
 
                     }catch (Exception e){
                         System.out.println("Ошибка!");
@@ -86,45 +86,45 @@ public class Console extends View
                 System.out.println("Очепятка");
         }
     }
-    public void pcRun(){
-        boolean exitWhileLocal = true;
-        while (exitWhileLocal){
-            pcMenu();
-            System.out.print(">>");
-            switchMenu = in.nextInt();
-            switch (switchMenu){
-                case 0:
-                    clr();
-                    exitWhileLocal = false;
-                    break;
-                case 1:
-                    clr();
-                    updateFIOContact();
-                    break;
-                case 2:
-                    clr();
-                    addAddress();
-                    break;
-                case 3:
-                    clr();
-                    userInterface.deleteAddress(currentPerson);
-                    break;
-                case 4:
-                    clr();
-                    addPhoneNumber();
-                    break;
-                case 5:
-                case 6:
-                case 7:
-                case 8:
-                case 9:
-                default:
-                    System.out.println("Очепятка");
-                    break;
-            }
-        }
-
-    }
+//    public void pcRun(){
+//        boolean exitWhileLocal = true;
+//        while (exitWhileLocal){
+//            pcMenu();
+//            System.out.print(">>");
+//            switchMenu = in.nextInt();
+//            switch (switchMenu){
+//                case 0:
+//                    clr();
+//                    exitWhileLocal = false;
+//                    break;
+//                case 1:
+//                    clr();
+//                    updateFIOContact();
+//                    break;
+//                case 2:
+//                    clr();
+//                    addAddress();
+//                    break;
+//                case 3:
+//                    clr();
+//                    userInterface.deleteAddress(currentPerson);
+//                    break;
+//                case 4:
+//                    clr();
+//                    addPhoneNumber();
+//                    break;
+//                case 5:
+//                case 6:
+//                case 7:
+//                case 8:
+//                case 9:
+//                default:
+//                    System.out.println("Очепятка");
+//                    break;
+//            }
+//        }
+//
+//    }
 
     public void Menu() {
         System.out.println(
@@ -170,9 +170,9 @@ public class Console extends View
         String last = get_a_lastNamePerson();
         String first = get_a_firstNamePerson();
         String father = get_a_fatherNamePerson();
-        Person p = new Person();
+        Person p = new Person(last,first,father);
         try{
-            p = userInterface.findPerson(last,first,father);
+            //p = userInterface.findPerson(last,first,father);
         }catch (Exception e){
 
 //            if (e.toString() == "-1")
@@ -192,7 +192,7 @@ public class Console extends View
         String last = get_a_lastNamePerson();
         String first = get_a_firstNamePerson();
         String father = get_a_fatherNamePerson();
-        Person p = new Person();
+        Person p = new Person(last,first,father);
         try {
             p = userInterface.addContact(last,first,father);
         }catch (Exception e){
@@ -225,43 +225,43 @@ public class Console extends View
         userInterface.findFIOALL(last,first,father);
     }
 
-    private void updateFIOContact(){
-        System.out.println(
-                "------------------------------------------------\n"
-                +"------------- Изменить ФИО контакту ------------\n"
-                +"------------------------------------------------"
-        );
-        String last = get_a_lastNamePerson();
-        String first = get_a_firstNamePerson();
-        String father = get_a_fatherNamePerson();
-        Person person = new Person(/*last,first,father*/);
-        userInterface.changeContact(person);
-    }
+//    private void updateFIOContact(){
+//        System.out.println(
+//                "------------------------------------------------\n"
+//                +"------------- Изменить ФИО контакту ------------\n"
+//                +"------------------------------------------------"
+//        );
+//        String last = get_a_lastNamePerson();
+//        String first = get_a_firstNamePerson();
+//        String father = get_a_fatherNamePerson();
+//        Person person = new Person(/*last,first,father*/);
+//        userInterface.changeContact(person);
+//    }
 
-    private void addAddress(){
-        System.out.println(
-                "------------------------------------------------\n"
-                +"------------ Добавить адрес контакту -----------\n"
-                +"------------------------------------------------"
-        );
-        String nameStreet = get_a_addressName();
-        int numberHome = get_a_numberhome();
-        int numberApartment = get_a_numberApartment();
+//    private void addAddress(){
+//        System.out.println(
+//                "------------------------------------------------\n"
+//                +"------------ Добавить адрес контакту -----------\n"
+//                +"------------------------------------------------"
+//        );
+//        String nameStreet = get_a_addressName();
+//        int numberHome = get_a_numberhome();
+//        int numberApartment = get_a_numberApartment();
+//
+//        Address address = new Address(/*nameStreet,numberHome,numberApartment*/);
+//        userInterface.changeAddress(currentPerson,address);
+//    }
 
-        Address address = new Address(/*nameStreet,numberHome,numberApartment*/);
-        userInterface.changeAddress(currentPerson,address);
-    }
-
-    private void addPhoneNumber(){
-        System.out.println(
-                "------------------------------------------------\n"
-                +"---------| Добавление номера контакту |---------\n"
-                +"------------------------------------------------\n"
-        );
-        String number = get_a_Number();
-        int type = get_a_type();
-
-        PhoneNumber phoneNumber = new PhoneNumber(/*number,type*/);
-        userInterface.addPhone(currentPerson,phoneNumber);
-    }
+//    private void addPhoneNumber(){
+//        System.out.println(
+//                "------------------------------------------------\n"
+//                +"---------| Добавление номера контакту |---------\n"
+//                +"------------------------------------------------\n"
+//        );
+//        String number = get_a_Number();
+//        int type = get_a_type();
+//
+//        PhoneNumber phoneNumber = new PhoneNumber(/*number,type*/);
+//        userInterface.addPhone(currentPerson,phoneNumber);
+//    }
 }
