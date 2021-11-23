@@ -4,7 +4,6 @@ import Phonebook.model.Address;
 import Phonebook.model.Person;
 import Phonebook.model.PhoneNumber;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
@@ -35,28 +34,40 @@ public abstract class View
 
     //вспомогательные методы
     public void drawPerson(Person person){
-
+        System.out.println(
+                person.getLastname() + " "
+                + person.getFirstname() + " "
+                + person.getFathername()
+        );
     }
     public void drawAddress(Address address){
-
+        if (address != null){
+            System.out.println(
+                    address.getStreet().getStreetname() + " "
+                    + address.getHome() + " "
+                    + address.getAppartement()
+            );
+        }
+        else System.out.println("Ошибка чтения");
     }
     public void drawPhoneNumber(PhoneNumber phoneNumber){//тут нужны проверки!
         if (phoneNumber != null){
-            System.out.println(phoneNumber.getNumber());
-            System.out.println(phoneNumber.getPhoneType().getTypename());
+            System.out.print(phoneNumber.getNumber());
+            System.out.println("  "+phoneNumber.getPhoneType().getTypename());
         }
     }
     public void drawPhoneNumbers(Set<PhoneNumber> args){
         if (args.size() > 0){
             Iterator<PhoneNumber> iterator = args.iterator();
-            for (int i = 0; i < args.size();i++){
+            int i = 0;
+            while (iterator.hasNext()){
                 System.out.print("["+ i + "] ");
-//                drawPhoneNumber(args.iterator().next());
-                //Нужно понять как вытащить элемент из сета по индексу
+                i++;
+                drawPhoneNumber(args.iterator().next());
             }
         }
         else
-            System.out.println("\"Ошибка. Нет номеров.");
+            System.out.println("Ошибка. Нет номеров.");
     }
     public boolean checkFormat(String number){
         if (number.charAt(1) == '(' &&

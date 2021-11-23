@@ -200,7 +200,7 @@ public class Console extends View
         String father = get_a_fatherNamePerson();
         Person p = new Person(last,first,father);
         try{
-            //p = userInterface.findPerson(last,first,father);
+            p = userInterface.findPerson(last,first,father);
         }catch (Exception e){
 
 //            if (e.toString() == "-1")

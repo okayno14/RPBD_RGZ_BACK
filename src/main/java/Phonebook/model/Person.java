@@ -100,6 +100,18 @@ public class Person implements Serializable, Comparable<Person>
         phoneNumberSet.add(pn);
     }
 
+    public String getLastname() {
+        return lastname;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getFathername() {
+        return fathername;
+    }
+
     public void setAddress(Address address){this.address=address;}
 
     public void deleteAddress(){address = null;}
