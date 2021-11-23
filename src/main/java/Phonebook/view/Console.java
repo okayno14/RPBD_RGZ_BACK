@@ -2,7 +2,9 @@ package Phonebook.view;
 
 import Phonebook.controller.Controller;
 import Phonebook.controller.Phonebook;
+import Phonebook.model.Address;
 import Phonebook.model.Person;
+import Phonebook.model.PhoneNumber;
 
 import java.util.Scanner;
 
@@ -31,24 +33,33 @@ public class Console extends View
                 case 1:
                     clr();
                     try {
-//                        currentPerson =
+                        currentPerson = findPerson();
                     }catch (Exception e){
-                        e.printStackTrace();
-                    }finally {
 
                     }
+//                    in.next();
+//                    clr();
                     break;
                 case 2:
                     clr();
+                    try {
+                        currentPerson = addContact();
+                        if (toRunMenuTwo())
+                            pcRun();
 
+                    }catch (Exception e){
+                        System.out.println("Ошибка!");
+                    }
+//                    clr();
                     break;
                 case 3:
                     clr();
+                    findBy4();
 
                     break;
                 case 4:
                     clr();
-
+                    findList_FIO();
                     break;
                 default:
                     clr();
@@ -82,11 +93,25 @@ public class Console extends View
             switchMenu = in.nextInt();
             switch (switchMenu){
                 case 0:
+                    clr();
+                    exitWhileLocal = false;
                     break;
                 case 1:
+                    clr();
+                    updateFIOContact();
+                    break;
                 case 2:
+                    clr();
+                    addAddress();
+                    break;
                 case 3:
+                    clr();
+                    userInterface.deleteAddress(currentPerson);
+                    break;
                 case 4:
+                    clr();
+                    addPhoneNumber();
+                    break;
                 case 5:
                 case 6:
                 case 7:
@@ -135,13 +160,107 @@ public class Console extends View
         );
     }
 
-    Person findPerson(){
+    private Person findPerson(){
         System.out.println(
-                "------------------------------------------------"
-                +"----------------| Поиск контакта |--------------"
+                "------------------------------------------------\n"
+                +"----------------| Поиск контакта |--------------\n"
                 +"------------------------------------------------"
         );
+        String last = get_a_lastNamePerson();
+        String first = get_a_firstNamePerson();
+        String father = get_a_fatherNamePerson();
+        Person p = new Person();
+        try{
+            p = userInterface.findPerson(last,first,father);
+        }catch (Exception e){
 
-        return null;
+//            if (e.toString() == "-1")
+//                noRes();
+            ///прописать вывод по кодам
+        }
+
+        return p;
+    }
+
+    private Person addContact(){
+        System.out.println(
+                "------------------------------------------------\n"
+                +"---------------| Добавление контакта |----------\n"
+                +"------------------------------------------------"
+        );
+        String last = get_a_lastNamePerson();
+        String first = get_a_firstNamePerson();
+        String father = get_a_fatherNamePerson();
+        Person p = new Person();
+        try {
+            p = userInterface.addContact(last,first,father);
+        }catch (Exception e){
+
+            //тунель
+        }
+        return p;
+    }
+
+    private void findBy4(){
+        System.out.println(
+                "------------------------------------------------\n"
+                +"------- Поиск контакта по 4-м символам  --------\n"
+                +"-------------- телефонного номера --------------\n"
+                +"------------------------------------------------"
+        );
+        System.out.print("Введите 4-е символа телефонного номера контакта :");
+        //ввод 4 чмсел
+    }
+
+    private void findList_FIO(){
+        System.out.println(
+                "------------------------------------------------\n"
+                +"------------ Поиск контакта по ФИО  -----------\n"
+                +"------------------------------------------------"
+        );
+        String last = get_a_lastNamePerson();
+        String first = get_a_firstNamePerson();
+        String father = get_a_fatherNamePerson();
+        userInterface.findFIOALL(last,first,father);
+    }
+
+    private void updateFIOContact(){
+        System.out.println(
+                "------------------------------------------------\n"
+                +"------------- Изменить ФИО контакту ------------\n"
+                +"------------------------------------------------"
+        );
+        String last = get_a_lastNamePerson();
+        String first = get_a_firstNamePerson();
+        String father = get_a_fatherNamePerson();
+        Person person = new Person(/*last,first,father*/);
+        userInterface.changeContact(person);
+    }
+
+    private void addAddress(){
+        System.out.println(
+                "------------------------------------------------\n"
+                +"------------ Добавить адрес контакту -----------\n"
+                +"------------------------------------------------"
+        );
+        String nameStreet = get_a_addressName();
+        int numberHome = get_a_numberhome();
+        int numberApartment = get_a_numberApartment();
+
+        Address address = new Address(/*nameStreet,numberHome,numberApartment*/);
+        userInterface.changeAddress(currentPerson,address);
+    }
+
+    private void addPhoneNumber(){
+        System.out.println(
+                "------------------------------------------------\n"
+                +"---------| Добавление номера контакту |---------\n"
+                +"------------------------------------------------\n"
+        );
+        String number = get_a_Number();
+        int type = get_a_type();
+
+        PhoneNumber phoneNumber = new PhoneNumber(/*number,type*/);
+        userInterface.addPhone(currentPerson,phoneNumber);
     }
 }

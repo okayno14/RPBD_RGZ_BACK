@@ -56,12 +56,14 @@ public abstract class View
 
 
     //методы для инпута данных
-    public String get_a_bumber(){
+    public String get_a_Number(){
 //        return in.nextLine();
         return null;
     }
     public String get_a_addressName(){
-        return null;
+        System.out.print("Введите название улицы проживания :");
+        String name = in.next();
+        return name;
     }
     public int get_a_type(){
         return 0;
@@ -76,21 +78,21 @@ public abstract class View
         System.out.print(
                 "Введите фамилию контакта : "
         );
-        String name = in.nextLine();
+        String name = in.next();
         return name;
     }
     public String get_a_firstNamePerson(){
         System.out.print(
                 "Введите имя контакта : "
         );
-        String name = in.nextLine();
+        String name = in.next();
         return name;
     }
     public String get_a_fatherNamePerson(){
         System.out.print(
                 "Введите отчество контакта : "
         );
-        String name = in.nextLine();
+        String name = in.next();
         return name;
     }
 }

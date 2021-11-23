@@ -8,6 +8,7 @@ import Phonebook.model.PhoneNumber;
 //контроллером
 public interface Phonebook {
     Person addContact(String lastName,String firstName,String fatherName);
+    void changeContact(Person p);
     void deleteContact(Person p);
     void addPhone(Person p, PhoneNumber pn);
     void changePhone(Person p,PhoneNumber oldPn,PhoneNumber newPn);
@@ -16,5 +17,5 @@ public interface Phonebook {
     void deleteAddress(Person p);
     void findFIOALL(String lastName,String firstName, String fatherName);
     void findContactBy4NumberPhone(int a,int b,int c,int d);
-    Person findPerson(String lastName,String firstName, String fatherName);
+    Person findPerson(String lastName,String firstName, String fatherName) throws Exception;
 }
