@@ -15,6 +15,7 @@ public class Console extends View
     private boolean flagRun;
     private int switchMenu;
 
+
     public Console(Controller con){
         userInterface = con;
         flagRun = true;
