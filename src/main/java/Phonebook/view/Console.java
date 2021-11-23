@@ -2,9 +2,7 @@ package Phonebook.view;
 
 import Phonebook.controller.Controller;
 import Phonebook.controller.Phonebook;
-import Phonebook.model.Address;
-import Phonebook.model.Person;
-import Phonebook.model.PhoneNumber;
+import Phonebook.model.*;
 
 import java.util.Scanner;
 
@@ -114,7 +112,13 @@ public class Console extends View
                     addPhoneNumber();
                     break;
                 case 5:
+                    clr();
+                    updatePhoneNumber();
+                    break;
                 case 6:
+                    clr();
+
+                    break;
                 case 7:
                 case 8:
                 case 9:
@@ -170,7 +174,7 @@ public class Console extends View
         String last = get_a_lastNamePerson();
         String first = get_a_firstNamePerson();
         String father = get_a_fatherNamePerson();
-        Person p = new Person();
+        Person p = new Person(last,first,father);
         try{
             p = userInterface.findPerson(last,first,father);
         }catch (Exception e){
@@ -192,7 +196,7 @@ public class Console extends View
         String last = get_a_lastNamePerson();
         String first = get_a_firstNamePerson();
         String father = get_a_fatherNamePerson();
-        Person p = new Person();
+        Person p = new Person(last,first,father);
         try {
             p = userInterface.addContact(last,first,father);
         }catch (Exception e){
@@ -234,7 +238,7 @@ public class Console extends View
         String last = get_a_lastNamePerson();
         String first = get_a_firstNamePerson();
         String father = get_a_fatherNamePerson();
-        Person person = new Person(/*last,first,father*/);
+        Person person = new Person(last,first,father);
         userInterface.changeContact(person);
     }
 
@@ -247,8 +251,7 @@ public class Console extends View
         String nameStreet = get_a_addressName();
         int numberHome = get_a_numberhome();
         int numberApartment = get_a_numberApartment();
-
-        Address address = new Address(/*nameStreet,numberHome,numberApartment*/);
+        Address address = new Address(new Street(nameStreet),numberHome,numberApartment);
         userInterface.changeAddress(currentPerson,address);
     }
 
@@ -261,7 +264,23 @@ public class Console extends View
         String number = get_a_Number();
         int type = get_a_type();
 
-        PhoneNumber phoneNumber = new PhoneNumber(/*number,type*/);
+        PhoneNumber phoneNumber = new PhoneNumber(new PhoneType(type),number);
         userInterface.addPhone(currentPerson,phoneNumber);
+    }
+
+    private void updatePhoneNumber(){
+        System.out.println(
+                "------------------------------------------------\n"
+                +"-------- Редактировать номер контакту ----------\n"
+                +"------------------------------------------------"
+        );
+        ///отрисовка
+//        if (drawPhoneNumbers(currentPerson.getPhoneNumberSet())){
+//
+//        }
+    }
+
+    private void deletePhone(){
+
     }
 }

@@ -81,5 +81,7 @@ public class Controller implements Phonebook
             Exception exception = new Exception("-1");
             throw exception;
         }
+
+        return null;
     }
 }
