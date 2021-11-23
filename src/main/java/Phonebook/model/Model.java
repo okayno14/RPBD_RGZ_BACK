@@ -17,7 +17,7 @@ public class Model
     private Configuration configuration;
     private HashSet<Person> personHashSet;
 
-    void connect()
+    void connect() throws Exception
     {
         configuration = new Configuration();
         configuration.addAnnotatedClass(Person.class);
@@ -31,10 +31,18 @@ public class Model
 
     public void disconnect(){sessionFactory.close();}
 
-    public Model()
+    public Model() throws Exception
     {
-        connect();
-        personHashSet = new HashSet<Person>();
+        try
+        {
+            connect();
+        }
+        catch (Exception e){throw e; }
+        finally
+        {
+            personHashSet = new HashSet<Person>();
+        }
+
     }
 
     public void insertPerson(Person p)

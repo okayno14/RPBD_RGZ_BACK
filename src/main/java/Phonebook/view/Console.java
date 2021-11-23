@@ -43,8 +43,8 @@ public class Console extends View
                     clr();
                     try {
                         currentPerson = addContact();
-                        if (toRunMenuTwo())
-                            pcRun();
+                        //if (toRunMenuTwo())
+                            //pcRun();
 
                     }catch (Exception e){
                         System.out.println("Ошибка!");
@@ -84,6 +84,7 @@ public class Console extends View
                 System.out.println("Очепятка");
         }
     }
+
     public void pcRun(){
         boolean exitWhileLocal = true;
         while (exitWhileLocal){
@@ -176,7 +177,7 @@ public class Console extends View
         String father = get_a_fatherNamePerson();
         Person p = new Person(last,first,father);
         try{
-            p = userInterface.findPerson(last,first,father);
+            //p = userInterface.findPerson(last,first,father);
         }catch (Exception e){
 
 //            if (e.toString() == "-1")

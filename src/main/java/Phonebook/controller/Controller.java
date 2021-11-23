@@ -15,7 +15,14 @@ public class Controller implements Phonebook
 
     public Controller()
     {
-        model = new Model();
+        try
+        {
+            model = new Model();
+        }
+        catch (Exception e)
+        {
+            System.err.println("Ошибка подключения к БД. Переход в офлайн режим");
+        }
     }
 
     public void setView(View ui) {this.ui = ui;}
@@ -81,7 +88,11 @@ public class Controller implements Phonebook
             Exception exception = new Exception("-1");
             throw exception;
         }
-
         return null;
+
+
     }
+
+    @Override
+    public void disconnect() { model.disconnect(); }
 }

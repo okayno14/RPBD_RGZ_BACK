@@ -18,4 +18,5 @@ public interface Phonebook {
     void findFIOALL(String lastName,String firstName, String fatherName);
     void findContactBy4NumberPhone(int a,int b,int c,int d);
     Person findPerson(String lastName,String firstName, String fatherName) throws Exception;
+    void disconnect();
 }
