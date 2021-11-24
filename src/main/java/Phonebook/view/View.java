@@ -13,6 +13,7 @@ import java.util.Set;
 public abstract class View
 {
     protected Scanner in = new Scanner(System.in);
+    private Scanner cur_in = new Scanner(System.in);
     private final String os = System.getProperty("os.name");
 
     //Обработчики меню
@@ -97,6 +98,8 @@ public abstract class View
     }
     protected void messageEnter(){
         System.out.println("Для продолжения нажмите клавишу Enter");
+        cur_in.nextLine();
+        clr();
     }
 
     //методы для инпута данных

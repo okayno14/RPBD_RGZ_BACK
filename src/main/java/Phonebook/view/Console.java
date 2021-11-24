@@ -14,7 +14,7 @@ public class Console extends View
     private Person currentPerson;
     private boolean flagRun;
     private int switchMenu;
-    private Scanner cur_in = new Scanner(System.in);
+
 
     public Console(Controller con){
         userInterface = con;
@@ -44,44 +44,34 @@ public class Console extends View
                                 pcRun();
                         } catch (Exception e) {}
                         messageEnter();
-                        cur_in.nextLine();
-                        clr();
                         break;
                     case 2:
                         clr();
                         try {
-//                        currentPerson = addContact();
-                            currentPerson = null;
+                            currentPerson = addContact();
+//                            currentPerson = null;
                             if (toRunMenuTwo())
                                 pcRun();
 
                         } catch (Exception e) {
-                            System.out.println("Ошибка!");
+//                            System.out.println("Ошибка!");
                         }
                         messageEnter();
-                        cur_in.nextLine();
-                        clr();
                         break;
                     case 3:
                         clr();
                         findBy4();
                         messageEnter();
-                        cur_in.nextLine();
-                        clr();
                         break;
                     case 4:
                         clr();
                         findList_FIO();
                         messageEnter();
-                        cur_in.nextLine();
-                        clr();
                         break;
                     default:
                         clr();
                         System.out.println("Очепятка");
                         messageEnter();
-                        cur_in.nextLine();
-                        clr();
                         break;
                 }
             } catch (InputMismatchException i) {
@@ -90,7 +80,6 @@ public class Console extends View
                 clr();
             }
         }
-        cur_in.close();
     }
     public void pcRun(){
         clr();
@@ -109,40 +98,31 @@ public class Console extends View
                     clr();
                     updateFIOContact();
                     messageEnter();
-                    cur_in.nextLine();
-                    clr();
                     break;
                 case 2:
                     clr();
                     addAddress();
                     messageEnter();
-                    cur_in.nextLine();
-                    clr();
                     break;
                 case 3:
                     clr();
                     userInterface.deleteAddress(currentPerson);
                     messageEnter();
-                    cur_in.nextLine();
-                    clr();
                     break;
                 case 4:
                     clr();
                     addPhoneNumber();
                     messageEnter();
-                    cur_in.nextLine();
-                    clr();
                     break;
                 case 5:
                     clr();
                     updatePhoneNumber();
                     messageEnter();
-                    cur_in.nextLine();
-                    clr();
                     break;
                 case 6:
                     clr();
                     deletePhone();
+                    messageEnter();
                     break;
                 case 7:
                     clr();
@@ -153,22 +133,16 @@ public class Console extends View
                     clr();
                     drawPhoneNumbers(currentPerson.getPhoneNumberSet());
                     messageEnter();
-                    cur_in.nextLine();
-                    clr();
                     break;
                 case 9:
                     clr();
                     System.out.println("<->");
                     drawAddress(currentPerson.getAddress());
                     messageEnter();
-                    cur_in.nextLine();
-                    clr();
                     break;
                 default:
                     System.out.println("Очепятка");
                     messageEnter();
-                    cur_in.nextLine();
-                    clr();
                     break;
             }
         }
@@ -260,6 +234,7 @@ public class Console extends View
             p = userInterface.addContact(last,first,father);
         }catch (Exception e){
             System.out.println("По неким причинам мне неудалоь добавить контакт");
+            //throw e;
         }
         return p;
     }
