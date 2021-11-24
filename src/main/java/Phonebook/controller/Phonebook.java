@@ -8,7 +8,7 @@ import Phonebook.model.PhoneNumber;
 //контроллером
 public interface Phonebook {
     Person addContact(String lastName,String firstName,String fatherName);
-    void changeContact(Person p);
+    void changeContact(Person p,String lastName,String firstName,String fatherName);
     void deleteContact(Person p);
     void addPhone(Person p, PhoneNumber pn);
     void changePhone(Person p,PhoneNumber oldPn,PhoneNumber newPn);

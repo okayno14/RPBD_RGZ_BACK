@@ -28,44 +28,80 @@ public class Controller implements Phonebook
     @Override
     public Person addContact(String lastName, String firstName, String fatherName)
     {
-        Person p = new Person(lastName,firstName,fatherName);
-        model.insertPerson(p);
-        return p;
+        try {
+            Person p = new Person(lastName, firstName, fatherName);
+            model.insertPerson(p);
+            ui.success();
+            return p;
+        }catch (Exception e){
+            ui.fail();
+            throw e;
+        }
     }
 
     @Override
-    public void changeContact(Person p) {
-
+    public void changeContact(Person p,String lastName,String firstName,String fatherName) {
+        ///????????
     }
 
     @Override
     public void deleteContact(Person p) {
-
+        try {
+//            model.deleteContact(p);
+            ui.success();
+        }catch (Exception e){
+            ui.fail();
+        }
     }
 
     @Override
     public void addPhone(Person p, PhoneNumber pn) {
-
+        try {
+//            model.addPhone(p,pn);
+            ui.success();
+        }catch (Exception e){
+            ui.fail();
+        }
     }
 
     @Override
     public void changePhone(Person p, PhoneNumber oldPn, PhoneNumber newPn) {
-
+        try {
+//            model.changePhone(p,oldPn,newPn);
+            ui.success();
+        }catch (Exception e){
+            ui.fail();
+        }
     }
 
     @Override
     public void deletePhone(Person p, PhoneNumber pn) {
-
+        try {
+//            model.deletePhone(p,pn);
+            ui.success();
+        }catch (Exception e){
+            ui.fail();
+        }
     }
 
     @Override
     public void changeAddress(Person p, Address add) {
-
+        try {
+//            model.changeAddress(p,add);
+            ui.success();
+        }catch (Exception e){
+            ui.fail();
+        }
     }
 
     @Override
     public void deleteAddress(Person p) {
-
+        try {
+//            mode.deleteAddress(p);
+            ui.success();
+        }catch (Exception e){
+            ui.fail();
+        }
     }
 
     @Override

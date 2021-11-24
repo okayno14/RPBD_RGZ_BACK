@@ -282,8 +282,7 @@ public class Console extends View
         String last = get_a_lastNamePerson();
         String first = get_a_firstNamePerson();
         String father = get_a_fatherNamePerson();
-        Person person = new Person(last,first,father);
-        userInterface.changeContact(person);
+        userInterface.changeContact(currentPerson,last,first,father);
     }
     private void addAddress(){
         System.out.println(
