@@ -75,7 +75,13 @@ public class Controller implements Phonebook
 
     @Override
     public void findContactBy4NumberPhone(int a, int b, int c, int d) {
-
+//        testing
+        System.out.println(
+                "a = "+ a
+                +"b = "+ b
+                +"c = "+ c
+                +"d = "+ d
+        );
     }
 
     @Override

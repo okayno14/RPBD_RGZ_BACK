@@ -68,13 +68,13 @@ public abstract class View
         }
         else
             System.out.println("Ошибка. Нет номеров.");
-    }
+    }//нужно протестить !!!
     public boolean checkFormat(String number){
         if (number.charAt(1) == '(' &&
             number.charAt(5) == ')' &&
             number.charAt(9) == '-' &&
             number.charAt(12) == '-' &&
-            number.charAt(15) == '\0')
+            number.length() <= 15)
             return true;
         return false;
     }
@@ -119,9 +119,9 @@ public abstract class View
     }
     public int get_a_type(){
         System.out.println(
-                "Введите тип номера телефона"
-                +"[1] - моюильный "
-                +"[2] - рабочий "
+                "Введите тип номера телефона\n"
+                +"[1] - моюильный \n"
+                +"[2] - рабочий \n"
                 +"[3] - домашний"
         );
         int type = in.nextInt();
