@@ -354,8 +354,11 @@ public class Console extends View
                 +"-------| Редактировать номер контакту |---------\n"
                 +"------------------------------------------------"
         );
-        // аналогично вышестоящему классу нужно тестить с бд.
-//        userInterface.deletePhone(currentPerson,);
+        System.out.println("Введите номер для удаления ");
+        String numberDelete = get_a_Number();
+        int typeDelete = get_a_type();
+        PhoneNumber phoneNumberDelete = new PhoneNumber(new PhoneType(typeDelete),numberDelete);
+        userInterface.deletePhone(currentPerson,phoneNumberDelete);
     }
     private void deleteContact(){
         System.out.println(
