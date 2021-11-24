@@ -38,9 +38,11 @@ public class Console extends View
                         clr();
                         try {
                             currentPerson = findPerson();
-                        } catch (Exception e) {
+                            drawPerson(currentPerson);
 
-                        }
+                            if (toRunMenuTwo())
+                                pcRun();
+                        } catch (Exception e) {}
                         messageEnter();
                         cur_in.nextLine();
                         clr();
@@ -149,7 +151,7 @@ public class Console extends View
                     break;
                 case 8:
                     clr();
-                    //drawPhoneNumbers(currentPerson.getPhoneNumberSet());
+                    drawPhoneNumbers(currentPerson.getPhoneNumberSet());
                     messageEnter();
                     cur_in.nextLine();
                     clr();
@@ -157,7 +159,7 @@ public class Console extends View
                 case 9:
                     clr();
                     System.out.println("<->");
-                    //drawAddress(currentPerson.getAddress());
+                    drawAddress(currentPerson.getAddress());
                     messageEnter();
                     cur_in.nextLine();
                     clr();
@@ -236,10 +238,10 @@ public class Console extends View
         try{
             p = userInterface.findPerson(last,first,father);
         }catch (Exception e){
-
-//            if (e.toString() == "-1")
-//                noRes();
-            ///прописать вывод по кодам
+            if (e.toString().equalsIgnoreCase("-1"))
+                noRes();
+            if (e.toString().equalsIgnoreCase("-2"))
+                clones();
         }
 
         return p;
@@ -257,8 +259,7 @@ public class Console extends View
         try {
             p = userInterface.addContact(last,first,father);
         }catch (Exception e){
-
-            //тунель ексептионов
+            System.out.println("По неким причинам мне неудалоь добавить контакт");
         }
         return p;
     }

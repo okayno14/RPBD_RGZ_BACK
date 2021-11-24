@@ -86,11 +86,8 @@ public class Controller implements Phonebook
 
     @Override
     public Person findPerson(String lastName, String firstName, String fatherName) throws Exception {
-        if (lastName == null || firstName == null || fatherName == null){
-            System.out.println("не все данные!");
-            Exception exception = new Exception("-1");
-            throw exception;
-        }
+
+
         return null;
     }
 
