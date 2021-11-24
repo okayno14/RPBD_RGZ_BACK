@@ -42,14 +42,13 @@ public class Console extends View
 
                             if (toRunMenuTwo())
                                 pcRun();
-                        } catch (Exception e) {}
+                        } catch(Exception e) {}
                         messageEnter();
                         break;
                     case 2:
                         clr();
                         try {
                             currentPerson = addContact();
-//                            currentPerson = null;
                             if (toRunMenuTwo())
                                 pcRun();
 
@@ -131,13 +130,20 @@ public class Console extends View
                     break;
                 case 8:
                     clr();
-                    drawPhoneNumbers(currentPerson.getPhoneNumberSet());
+                    try {
+                        drawPhoneNumbers(currentPerson.getPhoneNumberSet());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                     messageEnter();
                     break;
                 case 9:
                     clr();
-                    System.out.println("<->");
-                    drawAddress(currentPerson.getAddress());
+                    try {
+                        drawAddress(currentPerson.getAddress());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                     messageEnter();
                     break;
                 default:
@@ -229,12 +235,12 @@ public class Console extends View
         String last = get_a_lastNamePerson();
         String first = get_a_firstNamePerson();
         String father = get_a_fatherNamePerson();
-        Person p = new Person(last,first,father);
+        Person p;
         try {
             p = userInterface.addContact(last,first,father);
         }catch (Exception e){
             System.out.println("По неким причинам мне неудалоь добавить контакт");
-            //throw e;
+            throw e;
         }
         return p;
     }
