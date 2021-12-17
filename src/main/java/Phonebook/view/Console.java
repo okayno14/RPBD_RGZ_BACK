@@ -3,6 +3,7 @@ package Phonebook.view;
 import Phonebook.controller.Controller;
 import Phonebook.controller.Phonebook;
 import Phonebook.model.*;
+import org.hibernate.HibernateException;
 
 import java.util.Scanner;
 
@@ -43,8 +44,8 @@ public class Console extends View
                     clr();
                     try {
                         currentPerson = addContact();
-                        //if (toRunMenuTwo())
-                            //pcRun();
+                        if (toRunMenuTwo())
+                            pcRun();
 
                     }catch (Exception e){
                         System.out.println("Ошибка!");
@@ -121,6 +122,10 @@ public class Console extends View
 
                     break;
                 case 7:
+                    clr();
+                    userInterface.deleteContact(currentPerson);
+                    exitWhileLocal=false;
+                    break;
                 case 8:
                 case 9:
                 default:
@@ -200,7 +205,7 @@ public class Console extends View
         Person p = new Person(last,first,father);
         try {
             p = userInterface.addContact(last,first,father);
-        }catch (Exception e){
+        }catch (HibernateException e){
 
             //тунель
         }

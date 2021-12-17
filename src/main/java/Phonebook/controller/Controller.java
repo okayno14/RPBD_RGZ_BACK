@@ -1,12 +1,10 @@
 package Phonebook.controller;
 
 
-import Phonebook.model.Address;
-import Phonebook.model.Person;
-import Phonebook.model.PhoneNumber;
-import Phonebook.model.Model;
+import Phonebook.model.*;
 import Phonebook.view.Console;
 import Phonebook.view.View;
+import org.hibernate.HibernateException;
 
 public class Controller implements Phonebook
 {
@@ -19,9 +17,10 @@ public class Controller implements Phonebook
         {
             model = new Model();
         }
-        catch (Exception e)
+        catch (Throwable e)
         {
-            System.err.println("Ошибка подключения к БД. Переход в офлайн режим");
+            //дёрнуть вьюшку
+            System.err.println("Ошибка чтения конфигурационного файла");
         }
     }
 
@@ -42,8 +41,9 @@ public class Controller implements Phonebook
     }
 
     @Override
-    public void deleteContact(Person p) {
-
+    public void deleteContact(Person p)
+    {
+        model.deletePerson(p);
     }
 
     @Override

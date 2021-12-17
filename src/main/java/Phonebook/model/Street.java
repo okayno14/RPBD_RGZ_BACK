@@ -4,6 +4,8 @@ package Phonebook.model;
 
 
 
+
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -11,7 +13,7 @@ import java.util.Set;
 
 
 @Entity
-public class Street implements Serializable, Comparable<Street>
+public class Street implements Serializable, Comparable<Street>, Cloneable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -24,12 +26,24 @@ public class Street implements Serializable, Comparable<Street>
     public Street(String streetname)
     {
         this.streetname = streetname;
-        //addressSet = new HashSet<Address>();
+        addressSet = new HashSet<Address>();
     }
 
-    public Street(final Street orig)
+    public Street()
     {
-        streetname  = new String(orig.streetname);
+        addressSet = new HashSet<Address>();
+    }
+
+
+    //поля-сущности - глубокая копия
+    @Override
+    protected Object clone(){
+
+        Street street = new Street();
+        street.id = this.id;
+        street.streetname  = new String(this.streetname);
+        return street;
+
     }
 
     @Override

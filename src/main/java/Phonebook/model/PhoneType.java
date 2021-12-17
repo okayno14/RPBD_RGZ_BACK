@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "type_of_phone")
-public class PhoneType implements Serializable, Comparable<PhoneType>
+public class PhoneType implements Serializable, Comparable<PhoneType>, Cloneable
 {
     String typename;
 
@@ -36,6 +36,18 @@ public class PhoneType implements Serializable, Comparable<PhoneType>
                     break;
                 }
         }
+    }
+
+    public PhoneType(){}
+
+    @Override
+    protected Object clone()
+    {
+        PhoneType pt = new PhoneType();
+        pt.id = this.id;
+        pt.typename = new String(this.typename);
+
+        return pt;
     }
 
     @Override

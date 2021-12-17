@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Address implements Serializable, Comparable<Address>
+public class Address implements Serializable, Comparable<Address>, Cloneable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -26,19 +26,35 @@ public class Address implements Serializable, Comparable<Address>
         this.street=street;
         this.home=home;
         this.appartement=app;
+
+        personHashSet = new HashSet<Person>();
+
+        street.addressSet.add(this);
     }
 
-    public Address(Address address)
+    public Address()
     {
-        this.id = address.id;
-        this.home = address.home;
-        this.appartement = address.appartement;
-        this.street = new Street(address.street);
+        personHashSet = new HashSet<Person>();
+    }
+
+    //поля - копируем ссылку
+    //поля-сущности - глубокая копия
+    @Override
+    protected Object clone()
+    {
+        Address address = new Address();
+        address.id = this.id;
+        address.home = this.home;
+        address.appartement = this.appartement;
+        address.street = (Street) this.street.clone();
+        return address;
     }
 
     @Override
     public int compareTo(Address address)
     {
+        if(address == null && this == null)
+            return 0;
         if(
                 id == address.id &&
                 appartement == address.appartement &&
@@ -49,7 +65,7 @@ public class Address implements Serializable, Comparable<Address>
 
     public int getHome() {return home;}
     public int getAppartement() {return appartement;}
-    public Street getStreet() {return new Street(street);}
+    public Street getStreet() {return (Street) street.clone();}
 
     @Override
     public boolean equals(Object o)

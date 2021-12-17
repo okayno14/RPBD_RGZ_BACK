@@ -33,30 +33,47 @@ public class Person implements Serializable, Comparable<Person>
         this.lastname=lastname;
         this.firstname=firstname;
         this.fathername = fathername;
-        //phoneNumberSet = new HashSet<PhoneNumber>();
+        phoneNumberSet = new HashSet<PhoneNumber>();
+    }
+
+    public Person()
+    {
+        phoneNumberSet = new HashSet<PhoneNumber>();
     }
 
     @Override
     public int compareTo(Person person)
     {
-        int flag = 2;
+        int flagFIO = 2;
         if(
-                address.compareTo(person.address)==0 &&
                 lastname.compareTo(person.lastname)==0 &&
                 firstname.compareTo(person.firstname)==0 &&
                 fathername.compareTo(person.fathername)==0
-
         )
-            flag=0;
+            flagFIO=0;
 
-        boolean flag2=true;
-        Iterator<PhoneNumber> i = phoneNumberSet.iterator();
-        Iterator<PhoneNumber> j = person.phoneNumberSet.iterator();
-        while(i.hasNext())
-            while (j.hasNext())
-                flag2 = flag2 && (i.next().compareTo(j.next())==0);
+        //Сравнение с учётом адресов
+        int flagAddress = 2;
+        if(this.address==null && person.address==null)
+            flagAddress=0;
+        else if(this.address.compareTo(person.address)==0)
+            flagAddress=0;
 
-        if(flag==0 && flag2)
+        //Сравнение по телефонам
+        boolean flagPhones=false;
+
+        if(phoneNumberSet==null && person.phoneNumberSet==null)
+            flagPhones=true;
+        else if (phoneNumberSet != null && person.phoneNumberSet != null)
+        {
+            Iterator<PhoneNumber> i = phoneNumberSet.iterator();
+            Iterator<PhoneNumber> j = person.phoneNumberSet.iterator();
+            while(i.hasNext())
+                while (j.hasNext())
+                    flagPhones = flagPhones && (i.next().compareTo(j.next())==0);
+        }
+
+        if(flagFIO==0 && flagAddress==0 && flagPhones)
             return 0;
         else return 2;
     }
@@ -73,6 +90,7 @@ public class Person implements Serializable, Comparable<Person>
             return true;
         else return false;
     }
+
 
     //public для теста, вместо модификатора по умолчанию
     public void addPhoneNumber(PhoneNumber pn) {phoneNumberSet.add(pn); }
@@ -100,13 +118,17 @@ public class Person implements Serializable, Comparable<Person>
         phoneNumberSet.add(pn);
     }
 
-    public void setAddress(Address address){this.address=address;}
+    public void setAddress(Address address)
+    {
+        this.address=address;
+        address.personHashSet.add(this);
+    }
 
     public void deleteAddress(){address = null;}
 
     //а тут у методов должен остаться модификатор public
     //возврат копии, дабы не было возможности как-то вне контроллера повлиять на данные структуры
     public HashSet<PhoneNumber> getPhoneNumberSet(){return new HashSet<PhoneNumber>(phoneNumberSet);}
-    public Address getAddress(){return new Address(address);}
+    public Address getAddress(){return (Address) address.clone();}
 
 }
