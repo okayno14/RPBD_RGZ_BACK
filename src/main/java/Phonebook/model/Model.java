@@ -169,8 +169,8 @@ public class Model
     private int countReferences(Street street)
     {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "select street.addressSet.size" +
-                "from Street as street" +
+        String hql = "select street.addressSet.size " +
+                "from Street as street " +
                 "where street.id = :id";
         Query q = session.createQuery(hql);
         q.setParameter("id", street.id);
@@ -214,16 +214,33 @@ public class Model
                 p.address = insert(add);
             session.update(p);
         transaction.commit();
-
     }
 
+    public void deleteAddress(Person p)
+    {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+            if(p.address!=null)
+            {
+                p.address.personHashSet.remove(p);
+                Address buf = p.address;
+                p.address=null;
+                session.update(p);
+                if(countReferences(buf)==0)
+                    delete(buf);
+            }
+        transaction.commit();
+    }
     /*Методы обновления Person, связанные с телефонами*/
 
     //используется в контексте обновления контакта
     private void delete(Address add)
     {
         Session session = sessionFactory.getCurrentSession();
+        if(countReferences(add.street)==1)
+            delete(add.street);
         session.delete(add);
+        add=null;
     }
 
     public void deletePerson(Person p) throws HibernateException

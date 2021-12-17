@@ -64,7 +64,7 @@ public class Controller implements Phonebook
 
     @Override
     public void deleteAddress(Person p) {
-
+        model.deleteAddress(p);
     }
 
     @Override
