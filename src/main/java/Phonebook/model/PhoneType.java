@@ -68,4 +68,6 @@ public class PhoneType implements Serializable, Comparable<PhoneType>, Cloneable
             return true;
         return false;
     }
+
+    public String getTypename(){return typename;}
 }

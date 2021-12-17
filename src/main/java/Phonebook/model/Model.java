@@ -104,7 +104,10 @@ public class Model
 
         Address finded = find(add);
         if(finded==null)
+        {
             session.save(add);
+            finded = add;
+        }
 
         return finded;
     }
@@ -112,6 +115,7 @@ public class Model
     private Address find(Address add)
     {
         Session session =  sessionFactory.getCurrentSession();
+        //поиск по строке улицы избыточен, достаточно вбить id
         String hql = "from Address as addr " +
                 "where " +
                 "addr.street.streetname = :street and " +
@@ -146,7 +150,10 @@ public class Model
         Session session = sessionFactory.getCurrentSession();
         Street finded = find(street);
         if(finded == null)
-            session.save(finded);
+        {
+            session.save(street);
+            finded = street;
+        }
         return finded;
     }
 
@@ -190,8 +197,6 @@ public class Model
     void update(Address old_, Address new_)
     {
         Session session = sessionFactory.getCurrentSession();
-
-        new_.street = insert(new_.street);
         insert(new_);
 
         if(countReferences(old_)==1)
@@ -204,16 +209,12 @@ public class Model
         Session session = sessionFactory.getCurrentSession();
         Transaction transaction = session.beginTransaction();
             if(p.address!=null)
-            {
                 update(p.address,add);
-                p.address = add;
-            }
             else
                 p.address = insert(add);
-
-            p.address.personHashSet.add(p);
-
+            session.update(p);
         transaction.commit();
+
     }
 
     /*Методы обновления Person, связанные с телефонами*/

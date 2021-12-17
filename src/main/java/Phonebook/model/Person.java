@@ -131,4 +131,11 @@ public class Person implements Serializable, Comparable<Person>
     public HashSet<PhoneNumber> getPhoneNumberSet(){return new HashSet<PhoneNumber>(phoneNumberSet);}
     public Address getAddress(){return (Address) address.clone();}
 
+    public String getLastname() {
+        return lastname;
+    }
+
+    public String getFirstname(){return firstname;}
+
+    public String getFathername(){return fathername;}
 }

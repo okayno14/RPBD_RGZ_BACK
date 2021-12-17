@@ -36,11 +36,6 @@ public class Controller implements Phonebook
     }
 
     @Override
-    public void changeContact(Person p) {
-
-    }
-
-    @Override
     public void deleteContact(Person p)
     {
         model.deletePerson(p);
@@ -91,6 +86,11 @@ public class Controller implements Phonebook
         }
         return null;
 
+
+    }
+
+    @Override
+    public void changeContact(Person p, String lastName, String firstName, String fatherName) {
 
     }
 
