@@ -194,13 +194,15 @@ public class Model
 
     //модификация PersonHashSet делается снаружи
     //вспомогательный для обновления контакта метод
-    void update(Address old_, Address new_)
+    Address update(Address old_, Address new_)
     {
         Session session = sessionFactory.getCurrentSession();
-        insert(new_);
+        new_=insert(new_);
 
         if(countReferences(old_)==1)
             delete(old_);
+
+        return new_;
     }
 
     /*Методы обновления Person, связанные с адресами*/
@@ -209,7 +211,7 @@ public class Model
         Session session = sessionFactory.getCurrentSession();
         Transaction transaction = session.beginTransaction();
             if(p.address!=null)
-                update(p.address,add);
+                p.address = update(p.address,add);
             else
                 p.address = insert(add);
             session.update(p);
