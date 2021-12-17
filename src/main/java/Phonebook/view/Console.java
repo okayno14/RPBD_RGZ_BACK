@@ -3,8 +3,9 @@ package Phonebook.view;
 import Phonebook.controller.Controller;
 import Phonebook.controller.Phonebook;
 import Phonebook.model.*;
-import org.hibernate.HibernateException;
+import org.w3c.dom.ls.LSOutput;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Console extends View
@@ -20,79 +21,74 @@ public class Console extends View
         flagRun = true;
     }
 
-    public void run(){
-        while (flagRun){
-            Menu();
-            System.out.print(">>");
-            switchMenu = in.nextInt();
-            switch (switchMenu){
-                case 0:
-                    flagRun = false;
-                    System.out.println("Выход");
-                    break;
-                case 1:
-                    clr();
-                    try {
-                        currentPerson = findPerson();
-                    }catch (Exception e){
+    //Обработчики меню
+    public void run() {
+        clr();
+        while (flagRun) {
+            try {
+                Menu();
+                System.out.print(">>");
+                switchMenu = in.nextInt();
+                switch (switchMenu) {
+                    case 0:
+                        flagRun = false;
+                        System.out.println("Выход");
+                        break;
+                    case 1:
+                        clr();
+                        try {
+                            currentPerson = findPerson();
+                            drawPerson(currentPerson);
 
-                    }
-//                    in.next();
-//                    clr();
-                    break;
-                case 2:
-                    clr();
-                    try {
-                        currentPerson = addContact();
-                        if (toRunMenuTwo())
-                            pcRun();
+                            if (toRunMenuTwo())
+                                pcRun();
+                        } catch(Exception e) {}
+                        messageEnter();
+                        break;
+                    case 2:
+                        clr();
+                        try {
+                            currentPerson = addContact();
+                            if (toRunMenuTwo())
+                                pcRun();
 
-                    }catch (Exception e){
-                        System.out.println("Ошибка!");
-                    }
-//                    clr();
-                    break;
-                case 3:
-                    clr();
-                    findBy4();
-
-                    break;
-                case 4:
-                    clr();
-                    findList_FIO();
-                    break;
-                default:
-                    clr();
-                    System.out.println("Очепятка");
-                    break;
+                        } catch (Exception e) {
+//                            System.out.println("Ошибка!");
+                        }
+                        messageEnter();
+                        break;
+                    case 3:
+                        clr();
+                        findBy4();
+                        messageEnter();
+                        break;
+                    case 4:
+                        clr();
+                        findList_FIO();
+                        messageEnter();
+                        break;
+                    default:
+                        clr();
+                        System.out.println("Очепятка");
+                        messageEnter();
+                        break;
+                }
+            } catch (InputMismatchException i) {
+                System.out.println(i.toString());
+                in.next();
+                clr();
             }
         }
-
     }
-    private boolean toRunMenuTwo(){
-        System.out.println(
-                "Желаете редактировать контакт?\n"
-                +"[1] - Да;   [0] - Нет;"
-        );
-        int tmp;
-        while (true){
-            tmp = in.nextInt();
-            if (tmp == 0)
-                return false;
-            else if (tmp == 1)
-                return true;
-            else
-                System.out.println("Очепятка");
-        }
-    }
-
     public void pcRun(){
+        clr();
         boolean exitWhileLocal = true;
+        int switchMenuPC;
         while (exitWhileLocal){
             pcMenu();
             System.out.print(">>");
-            switchMenu = in.nextInt();
-            switch (switchMenu){
+            switchMenuPC = in.nextInt();
+            switch (switchMenuPC){
                 case 0:
                     clr();
                     exitWhileLocal = false;
@@ -100,46 +96,68 @@ public class Console extends View
                 case 1:
                     clr();
                     updateFIOContact();
+                    messageEnter();
                     break;
                 case 2:
                     clr();
                     addAddress();
+                    messageEnter();
                     break;
                 case 3:
                     clr();
                     userInterface.deleteAddress(currentPerson);
+                    messageEnter();
                     break;
                 case 4:
                     clr();
                     addPhoneNumber();
+                    messageEnter();
                     break;
                 case 5:
                     clr();
                     updatePhoneNumber();
+                    messageEnter();
                     break;
                 case 6:
                     clr();
-
+                    deletePhone();
+                    messageEnter();
                     break;
                 case 7:
                     clr();
-                    userInterface.deleteContact(currentPerson);
-                    exitWhileLocal=false;
+                    deleteContact();
+                    exitWhileLocal = false;
                     break;
                 case 8:
+                    clr();
+                    try {
+                        drawPhoneNumbers(currentPerson.getPhoneNumberSet());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    messageEnter();
+                    break;
                 case 9:
+                    clr();
+                    try {
+                        drawAddress(currentPerson.getAddress());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    messageEnter();
+                    break;
                 default:
                     System.out.println("Очепятка");
+                    messageEnter();
                     break;
             }
         }
-
     }
 
+    //Отрисовка меню
     public void Menu() {
         System.out.println(
-                "\n\n"
-                +"------------------------------------------------\n"
+                "------------------------------------------------\n"
                 +"--------------| Телефонная книга |--------------\n"
                 +"------------------------------------------------\n"
                 +"[1] - Найти контакт\n"
@@ -153,8 +171,7 @@ public class Console extends View
     }
     public void pcMenu() {
         System.out.println(
-                "\n\n"
-                +"------------------------------------------------\n"
+                "------------------------------------------------\n"
                 +"--------------|  Редактор контакта |------------\n"
                 +"------------------------------------------------\n"
                 +"[1] - Обновить ФИО контакта\n"
@@ -171,6 +188,23 @@ public class Console extends View
         );
     }
 
+    //Методы, используемые обработчиками
+    private boolean toRunMenuTwo(){
+        System.out.println(
+                "Желаете редактировать контакт?\n"
+                        +"[1] - Да;   [0] - Нет;"
+        );
+        int tmp;
+        while (true){
+            tmp = in.nextInt();
+            if (tmp == 0)
+                return false;
+            else if (tmp == 1)
+                return true;
+            else
+                System.out.println("Очепятка");
+        }
+    }
     private Person findPerson(){
         System.out.println(
                 "------------------------------------------------\n"
@@ -182,17 +216,16 @@ public class Console extends View
         String father = get_a_fatherNamePerson();
         Person p = new Person(last,first,father);
         try{
-            //p = userInterface.findPerson(last,first,father);
+            p = userInterface.findPerson(last,first,father);
         }catch (Exception e){
-
-//            if (e.toString() == "-1")
-//                noRes();
-            ///прописать вывод по кодам
+            if (e.toString().equalsIgnoreCase("-1"))
+                noRes();
+            if (e.toString().equalsIgnoreCase("-2"))
+                clones();
         }
 
         return p;
     }
-
     private Person addContact(){
         System.out.println(
                 "------------------------------------------------\n"
@@ -202,31 +235,37 @@ public class Console extends View
         String last = get_a_lastNamePerson();
         String first = get_a_firstNamePerson();
         String father = get_a_fatherNamePerson();
-        Person p = new Person(last,first,father);
+        Person p;
         try {
             p = userInterface.addContact(last,first,father);
-        }catch (HibernateException e){
-
-            //тунель
+        }catch (Exception e){
+            System.out.println("По неким причинам мне неудалоь добавить контакт");
+            throw e;
         }
         return p;
     }
-
     private void findBy4(){
         System.out.println(
                 "------------------------------------------------\n"
-                +"------- Поиск контакта по 4-м символам  --------\n"
-                +"-------------- телефонного номера --------------\n"
+                +"------| Поиск контакта по 4-м символам |--------\n"
+                +"-------------| телефонного номера |-------------\n"
                 +"------------------------------------------------"
         );
-        System.out.print("Введите 4-е символа телефонного номера контакта :");
-        //ввод 4 чмсел
+        System.out.print("Введите 4-е символа телефонного номера контакта : ");
+        int numberBy4;
+        while (true){
+            numberBy4 = in.nextInt();
+            if (numberBy4 < 10000 && numberBy4 >= 0){
+                break;
+            }
+            System.out.println("Введите 4 числа");
+        }
+        userInterface.findContactBy4NumberPhone((numberBy4/1000),((numberBy4%1000)/100),((numberBy4%100)/10),(numberBy4%10));
     }
-
     private void findList_FIO(){
         System.out.println(
                 "------------------------------------------------\n"
-                +"------------ Поиск контакта по ФИО  -----------\n"
+                +"-----------| Поиск контакта по ФИО |-----------\n"
                 +"------------------------------------------------"
         );
         String last = get_a_lastNamePerson();
@@ -234,33 +273,29 @@ public class Console extends View
         String father = get_a_fatherNamePerson();
         userInterface.findFIOALL(last,first,father);
     }
-
     private void updateFIOContact(){
         System.out.println(
                 "------------------------------------------------\n"
-                +"------------- Изменить ФИО контакту ------------\n"
+                +"------------| Изменить ФИО контакту |-----------\n"
                 +"------------------------------------------------"
         );
         String last = get_a_lastNamePerson();
         String first = get_a_firstNamePerson();
         String father = get_a_fatherNamePerson();
-        Person person = new Person(last,first,father);
-        userInterface.changeContact(person);
+        userInterface.changeContact(currentPerson,last,first,father);
     }
-
     private void addAddress(){
         System.out.println(
                 "------------------------------------------------\n"
-                +"------------ Добавить адрес контакту -----------\n"
+                +"-----------| Добавить адрес контакту |----------\n"
                 +"------------------------------------------------"
         );
         String nameStreet = get_a_addressName();
-        int numberHome = get_a_numberhome();
+        int numberHome = get_a_numberHome();
         int numberApartment = get_a_numberApartment();
         Address address = new Address(new Street(nameStreet),numberHome,numberApartment);
         userInterface.changeAddress(currentPerson,address);
     }
-
     private void addPhoneNumber(){
         System.out.println(
                 "------------------------------------------------\n"
@@ -273,20 +308,45 @@ public class Console extends View
         PhoneNumber phoneNumber = new PhoneNumber(new PhoneType(type),number);
         userInterface.addPhone(currentPerson,phoneNumber);
     }
-
     private void updatePhoneNumber(){
         System.out.println(
                 "------------------------------------------------\n"
-                +"-------- Редактировать номер контакту ----------\n"
+                +"-------| Редактировать номер контакту |---------\n"
                 +"------------------------------------------------"
         );
-        ///отрисовка
-//        if (drawPhoneNumbers(currentPerson.getPhoneNumberSet())){
-//
-//        }
+        ///Нужно вводить старый номер и новый для замены
+        System.out.println(
+                "Ввод старого номера"
+        );
+        String number = get_a_Number();
+        int type = get_a_type();
+        PhoneNumber phoneNumberOld = new PhoneNumber(new PhoneType(type),number);
+        System.out.println(
+                "Ввод нового номера"
+        );
+        number = get_a_Number();
+        type = get_a_type();
+        PhoneNumber phoneNumberNew = new PhoneNumber(new PhoneType(type),number);
+        userInterface.changePhone(currentPerson,phoneNumberOld,phoneNumberNew);
     }
-
     private void deletePhone(){
-
+        System.out.println(
+                "------------------------------------------------\n"
+                +"-------| Редактировать номер контакту |---------\n"
+                +"------------------------------------------------"
+        );
+        System.out.println("Введите номер для удаления ");
+        String numberDelete = get_a_Number();
+        int typeDelete = get_a_type();
+        PhoneNumber phoneNumberDelete = new PhoneNumber(new PhoneType(typeDelete),numberDelete);
+        userInterface.deletePhone(currentPerson,phoneNumberDelete);
+    }
+    private void deleteContact(){
+        System.out.println(
+                "------------------------------------------------\n"
+                +"----------------| Удаление контакта |-----------\n"
+                +"------------------------------------------------"
+        );
+        userInterface.deleteContact(currentPerson);
     }
 }
