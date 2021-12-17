@@ -1,6 +1,4 @@
 package Phonebook.model;
-
-import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
 import org.hibernate.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.*;
@@ -188,16 +186,35 @@ public class Model
     }
 
     //модификация PersonHashSet делается снаружи
+    //вспомогательный для обновления контакта метод
     void update(Address old_, Address new_)
     {
         Session session = sessionFactory.getCurrentSession();
+
         new_.street = insert(new_.street);
-        session.save(new_);
+        insert(new_);
+
         if(countReferences(old_)==1)
             delete(old_);
     }
 
     /*Методы обновления Person, связанные с адресами*/
+    public void changeAddress(Person p, Address add)
+    {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+            if(p.address!=null)
+            {
+                update(p.address,add);
+                p.address = add;
+            }
+            else
+                p.address = insert(add);
+
+            p.address.personHashSet.add(p);
+
+        transaction.commit();
+    }
 
     /*Методы обновления Person, связанные с телефонами*/
 

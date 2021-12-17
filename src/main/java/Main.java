@@ -11,8 +11,6 @@ public class Main
         Controller controller = new Controller();
         Console cli = new Console(controller);
         controller.setView(cli);
-        //cli.run();
-
-        controller.searchAddress();
+        cli.run();
     }
 }

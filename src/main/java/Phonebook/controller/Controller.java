@@ -62,8 +62,9 @@ public class Controller implements Phonebook
     }
 
     @Override
-    public void changeAddress(Person p, Address add) {
-
+    public void changeAddress(Person p, Address add)
+    {
+        model.changeAddress(p,add);
     }
 
     @Override

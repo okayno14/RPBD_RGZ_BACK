@@ -66,7 +66,7 @@ public abstract class View
         return null;
     }
     public String get_a_addressName(){
-        System.out.print("Введите название улицы проживания :");
+        System.out.print("Введите название улицы проживания : ");
         String name = in.next();
         return name;
     }
