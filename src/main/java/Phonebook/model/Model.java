@@ -249,7 +249,6 @@ public class Model
         if(countReferences(add.street)==1)
             delete(add.street);
         session.delete(add);
-        add=null;
     }
 
     private PhoneNumber insert(PhoneNumber pn)
@@ -308,7 +307,8 @@ public class Model
 
     private void delete(PhoneNumber pn)
     {
-
+        Session session = sessionFactory.getCurrentSession();
+        session.delete(pn);
     }
 
     public void deletePerson(Person p) throws HibernateException
