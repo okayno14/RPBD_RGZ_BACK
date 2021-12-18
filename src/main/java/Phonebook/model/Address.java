@@ -24,12 +24,13 @@ public class Address implements Serializable, Comparable<Address>, Cloneable
     public Address(Street street, int home, int app)
     {
         this.street=street;
+        street.addressSet.add(this);
         this.home=home;
         this.appartement=app;
 
         personHashSet = new HashSet<Person>();
 
-        street.addressSet.add(this);
+
     }
 
     public Address()
@@ -66,7 +67,11 @@ public class Address implements Serializable, Comparable<Address>, Cloneable
     public int getHome() {return home;}
     public int getAppartement() {return appartement;}
     public Street getStreet() {return (Street) street.clone();}
-
+    void deleteStreet()
+    {
+        street.addressSet.remove(this);
+        street = null;
+    }
     @Override
     public boolean equals(Object o)
     {

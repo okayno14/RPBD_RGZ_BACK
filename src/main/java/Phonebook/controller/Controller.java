@@ -43,7 +43,7 @@ public class Controller implements Phonebook
 
     @Override
     public void addPhone(Person p, PhoneNumber pn) {
-
+        model.addPhone(p,pn);
     }
 
     @Override

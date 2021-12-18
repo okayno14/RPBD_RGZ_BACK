@@ -196,7 +196,6 @@ public class Model
     //вспомогательный для обновления контакта метод
     Address update(Address old_, Address new_)
     {
-        Session session = sessionFactory.getCurrentSession();
         new_=insert(new_);
 
         if(countReferences(old_)==0)
@@ -212,9 +211,10 @@ public class Model
         Transaction transaction = session.beginTransaction();
             if(p.address!=null)
             {
-                p.address.personHashSet.remove(p);
-                p.address = update(p.address,add);
+                Address buf = p.address;
                 p.deleteAddress();
+                //p.address.personHashSet.remove(p);
+                p.address = update(buf,add);
             }
             else
                 p.setAddress(insert(add));
@@ -229,7 +229,8 @@ public class Model
         Transaction transaction = session.beginTransaction();
             if(p.address!=null)
             {
-                p.address.personHashSet.remove(p);
+                //p.address.personHashSet.remove(p);
+
                 Address buf = p.address;
                 p.deleteAddress();
                 session.update(p);
@@ -239,17 +240,24 @@ public class Model
         transaction.commit();
     }
     /*Методы обновления Person, связанные с телефонами*/
-    void addPhone(Person p, PhoneNumber pn)
+    public void addPhone(Person p, PhoneNumber pn)
     {
-
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+            p.addPhoneNumber(insert(pn));
+            session.update(p);
+        transaction.commit();
     }
 
     //используется в контексте обновления контакта
     private void delete(Address add)
     {
         Session session = sessionFactory.getCurrentSession();
-        if(countReferences(add.street)==1)
-            delete(add.street);
+        //add.street.addressSet.remove(add);
+        Street buf = add.street;
+        add.deleteStreet();
+        if(countReferences(buf)==0)
+            delete(buf);
         session.delete(add);
     }
 

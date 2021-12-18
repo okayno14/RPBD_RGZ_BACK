@@ -92,30 +92,38 @@ public class Person implements Serializable, Comparable<Person>
     }
 
 
-    //public для теста, вместо модификатора по умолчанию
-    public void addPhoneNumber(PhoneNumber pn) {phoneNumberSet.add(pn); }
+
+
 
     private Iterator<PhoneNumber> findElem(int pos)
     {
         Iterator<PhoneNumber> i = phoneNumberSet.iterator();
         int j=0;
 
-        while(i.hasNext() && j < pos+1)
+        while(i.hasNext() && j < pos)
             i.next();
 
         return i;
     }
 
-    public void deletePhone(int pos)
+    void addPhoneNumber(PhoneNumber pn)
     {
-        Iterator<PhoneNumber> i = findElem(pos);
-        i.remove();
+        phoneNumberSet.add(pn);
+        pn.personHashSet.add(this);
     }
 
     public void setPhoneNumber(int pos, PhoneNumber pn)
     {
         deletePhone(pos);
-        phoneNumberSet.add(pn);
+        addPhoneNumber(pn);
+    }
+
+    public void deletePhone(int pos)
+    {
+        Iterator<PhoneNumber> i = findElem(pos);
+        PhoneNumber toDel = i.next();
+        toDel.personHashSet.remove(this);
+        i.remove();
     }
 
     public void setAddress(Address address)
@@ -124,7 +132,11 @@ public class Person implements Serializable, Comparable<Person>
         address.personHashSet.add(this);
     }
 
-    public void deleteAddress(){address = null;}
+    public void deleteAddress()
+    {
+        address.personHashSet.remove(this);
+        address = null;
+    }
 
     //а тут у методов должен остаться модификатор public
     //возврат копии, дабы не было возможности как-то вне контроллера повлиять на данные структуры
