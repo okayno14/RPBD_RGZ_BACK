@@ -214,12 +214,11 @@ public class Model
             {
                 p.address.personHashSet.remove(p);
                 p.address = update(p.address,add);
+                p.deleteAddress();
             }
             else
-            {
-                p.address = insert(add);
-                p.address.personHashSet.add(p);
-            }
+                p.setAddress(insert(add));
+
             session.update(p);
         transaction.commit();
     }
@@ -232,7 +231,7 @@ public class Model
             {
                 p.address.personHashSet.remove(p);
                 Address buf = p.address;
-                p.address=null;
+                p.deleteAddress();
                 session.update(p);
                 if(countReferences(buf)==0)
                     delete(buf);
