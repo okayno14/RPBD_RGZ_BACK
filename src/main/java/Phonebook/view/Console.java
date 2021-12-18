@@ -36,13 +36,14 @@ public class Console extends View
                         break;
                     case 1:
                         clr();
-                        try {
+                        try
+                        {
                             currentPerson = findPerson();
                             drawPerson(currentPerson);
-
                             if (toRunMenuTwo())
                                 pcRun();
-                        } catch(Exception e) {}
+                        } catch(Exception e)
+                        {}
                         messageEnter();
                         break;
                     case 2:
@@ -205,7 +206,8 @@ public class Console extends View
                 System.out.println("Очепятка");
         }
     }
-    private Person findPerson(){
+    private Person findPerson() throws Exception
+    {
         System.out.println(
                 "------------------------------------------------\n"
                 +"----------------| Поиск контакта |--------------\n"
@@ -215,14 +217,22 @@ public class Console extends View
         String first = get_a_firstNamePerson();
         String father = get_a_fatherNamePerson();
         Person p = new Person(last,first,father);
-        try{
+        try
+        {
             p = userInterface.findPerson(last,first,father);
-        }catch (Exception e){
-            if (e.toString().equalsIgnoreCase("-1"))
-                noRes();
-            if (e.toString().equalsIgnoreCase("-2"))
-                clones();
         }
+        catch (Exception e)
+        {
+            String msg = e.getMessage();
+
+            if (msg.equalsIgnoreCase("-1"))
+                noRes();
+            if (msg.equalsIgnoreCase("-2"))
+                clones();
+
+            throw new Exception();
+        }
+
 
         return p;
     }

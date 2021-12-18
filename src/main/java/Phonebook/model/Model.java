@@ -80,19 +80,29 @@ public class Model
     }
 
     //Поиски
-    private Person checkCollection(Person p)
+    public Person findPerson(Person p, boolean isEmpty) throws SearchException
     {
-        Iterator<Person> i = personHashSet.iterator();
-        Person res;
-        boolean flag  = false;
-        while (i.hasNext())
-        {
-            res = i.next();
-            if(res.equals(p))
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+            if(isEmpty)
             {
-                return res;
+                String hql = "from Person as p " +
+                        "where p.lastname = :lastname and " +
+                        "p.firstname = :firstname and " +
+                        "p.fathername = :fathername and " +
+                        "p.address is null and " +
+                        "p.phoneNumberSet.size = 0";
+                Query q = session.createQuery(hql);
+                q.setParameter("lastname",p.lastname);
+                q.setParameter("firstname", p.firstname);
+                q.setParameter("fathername", p.fathername);
+                List<Person> list = q.getResultList();
+                if(list.size()>1 || list.size() == 0)
+                    throw new SearchException(list.size());
+                else return list.iterator().next();
             }
-        }
+
+        transaction.commit();
         return null;
     }
 

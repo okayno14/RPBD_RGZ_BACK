@@ -86,6 +86,21 @@ public class Controller implements Phonebook
             Exception exception = new Exception("-1");
             throw exception;
         }
+        Person data = new Person(lastName,firstName,fatherName);
+        Person contact;
+
+        try
+        {
+            contact = model.findPerson(data,true);
+        }
+        catch (SearchException se)
+        {
+            int res = se.quantity();
+            System.out.println(res);
+
+            //убрать
+            throw new Exception("-1");
+        }
         return null;
 
 
