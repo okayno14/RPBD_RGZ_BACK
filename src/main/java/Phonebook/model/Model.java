@@ -84,26 +84,112 @@ public class Model
     {
         Session session = sessionFactory.getCurrentSession();
         Transaction transaction = session.beginTransaction();
+            String hql;
             if(isEmpty)
-            {
-                String hql = "from Person as p " +
-                        "where p.lastname = :lastname and " +
-                        "p.firstname = :firstname and " +
-                        "p.fathername = :fathername and " +
-                        "p.address is null and " +
-                        "p.phoneNumberSet.size = 0";
+                    hql = "from Person as p " +
+                            "where p.lastname = :lastname and " +
+                            "p.firstname = :firstname and " +
+                            "p.fathername = :fathername and " +
+                            "p.address is null and " +
+                            "p.phoneNumberSet.size = 0";
+                else
+                    hql = " from Person as p " +
+                            "where p.lastname = :lastname and " +
+                            "p.firstname = :firstname and " +
+                            "p.fathername = :fathername and " +
+                            "p.address is not null or " +
+                            "p.phoneNumberSet.size > 0";
                 Query q = session.createQuery(hql);
                 q.setParameter("lastname",p.lastname);
                 q.setParameter("firstname", p.firstname);
                 q.setParameter("fathername", p.fathername);
                 List<Person> list = q.getResultList();
-                if(list.size()>1 || list.size() == 0)
-                    throw new SearchException(list.size());
-                else return list.iterator().next();
-            }
 
-        transaction.commit();
-        return null;
+                if(list.size()>1 || list.size() == 0)
+                {
+                    transaction.commit();
+                    throw new SearchException(list.size());
+                }
+                else
+                {
+                    Person finded = list.iterator().next();
+                    //finded.address.street.addressSet.size();
+                    personHashSet.add(finded);
+
+                    transaction.commit();
+                    return finded;
+                }
+    }
+
+    public Person findPerson(Person p, PhoneNumber pn) throws SearchException
+    {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction =session.beginTransaction();
+            String hql = "from Person as p " +
+                    "inner join fetch p.phoneNumberSet as num " +
+                    "where " +
+                    "p.lastname = :lastname and " +
+                    "p.firstname = :firstname and "+
+                    "p.fathername = :fathername and "+
+                    "num.number = :number and "+
+                    "num.phoneType.id = :type";
+            Query q = session.createQuery(hql);
+            q.setParameter("lastname",p.lastname);
+            q.setParameter("firstname", p.firstname);
+            q.setParameter("fathername", p.fathername);
+            q.setParameter("number", pn.number);
+            q.setParameter("type", pn.phoneType.id);
+            List<Person> list = q.getResultList();
+            transaction.commit();
+
+            if(list.size()>1 || list.size() == 0)
+            {
+                transaction.commit();
+                throw new SearchException(list.size());
+            }
+            else
+            {
+                Person finded = list.iterator().next();
+                personHashSet.add(finded);
+                transaction.commit();
+                return finded;
+            }
+    }
+
+    public Person findPerson(Person p, PhoneNumber pn, Address add) throws SearchException
+    {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+            String hql = "from Person as p " +
+                    "inner join fetch p.phoneNumberSet as num " +
+                    "where " +
+                    "p.lastname = :lastname and " +
+                    "p.firstname = :firstname and "+
+                    "p.fathername = :fathername and "+
+                    "num.number = :number and "+
+                    "num.phoneType.id = :type and" +
+                    "num.address = :address";
+            Query q = session.createQuery(hql);
+            q.setParameter("lastname",p.lastname);
+            q.setParameter("firstname", p.firstname);
+            q.setParameter("fathername", p.fathername);
+            q.setParameter("number", pn.number);
+            q.setParameter("type", pn.phoneType.id);
+            q.setParameter(":address", add);
+            List<Person> list = q.getResultList();
+
+            if(list.size()>1 || list.size() == 0)
+            {
+                transaction.commit();
+                throw new SearchException(list.size());
+            }
+            else
+            {
+                Person finded = list.iterator().next();
+                personHashSet.add(finded);
+                transaction.commit();
+                return finded;
+            }
     }
 
     private Address insert(Address add)

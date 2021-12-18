@@ -87,8 +87,9 @@ public class Controller implements Phonebook
             throw exception;
         }
         Person data = new Person(lastName,firstName,fatherName);
-        Person contact;
-
+        Person contact=null;
+        PhoneNumber pn=null;
+        Address add=null;
         try
         {
             contact = model.findPerson(data,true);
@@ -96,14 +97,55 @@ public class Controller implements Phonebook
         catch (SearchException se)
         {
             int res = se.quantity();
-            System.out.println(res);
+            //if(res==0)
+            //    throw new Exception("-1");
+            if(res>1 || res == 0)
+                try
+                {
+                    contact = model.findPerson(data,false);
+                }
+                catch(SearchException se1)
+                {
+                    res=se1.quantity();
+                    if(res==0)
+                        throw new Exception("-1");
+                    if(res>1)
+                        try
+                        {
+                            String number = ui.get_a_Number();
+                            int type = ui.get_a_type();
+                            pn = new PhoneNumber(new PhoneType(type),number);
+                            contact =  model.findPerson(data,pn);
+                        }
+                        catch (SearchException se2)
+                        {
+                            res = se2.quantity();
+                            if(res==0)
+                                throw new Exception("-1");
+                            if(res>1 && pn != null)
+                                try
+                                {
+                                    String streetname = ui.get_a_addressName();
+                                    int home = ui.get_a_numberHome();
+                                    int appartement = ui.get_a_numberApartment();
+                                    add = new Address(new Street(streetname),home,appartement);
+                                    contact = model.findPerson(data,pn,add);
 
-            //убрать
-            throw new Exception("-1");
+                                }
+                                catch(SearchException se3)
+                                {
+                                    res = se3.quantity();
+                                    if (res==0)
+                                        throw new Exception("-1");
+                                    if(res>1)
+                                        throw new Exception("-2");
+                                }
+                        }
+
+                }
+
         }
-        return null;
-
-
+        return contact;
     }
 
     @Override
