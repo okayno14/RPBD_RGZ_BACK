@@ -216,7 +216,10 @@ public class Model
                 p.address = update(p.address,add);
             }
             else
+            {
                 p.address = insert(add);
+                p.address.personHashSet.add(p);
+            }
             session.update(p);
         transaction.commit();
     }
