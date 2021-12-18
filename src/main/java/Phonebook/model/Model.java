@@ -234,6 +234,10 @@ public class Model
         transaction.commit();
     }
     /*Методы обновления Person, связанные с телефонами*/
+    void addPhone(Person p, PhoneNumber pn)
+    {
+
+    }
 
     //используется в контексте обновления контакта
     private void delete(Address add)
@@ -243,6 +247,36 @@ public class Model
             delete(add.street);
         session.delete(add);
         add=null;
+    }
+
+    private PhoneNumber insert(PhoneNumber pn)
+    {
+        return  null;
+    }
+
+    private PhoneNumber find(PhoneNumber pn)
+    {
+        return null;
+    }
+
+    private int countReferences(PhoneNumber pn)
+    {
+        return 0;
+    }
+
+    private PhoneType getPhoneType(int id)
+    {
+        return null;
+    }
+
+    private void update(PhoneNumber old_, PhoneNumber new_)
+    {
+
+    }
+
+    private void delete(PhoneNumber pn)
+    {
+
     }
 
     public void deletePerson(Person p) throws HibernateException
