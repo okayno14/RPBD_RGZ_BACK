@@ -53,8 +53,9 @@ public class Controller implements Phonebook
     }
 
     @Override
-    public void deletePhone(Person p, PhoneNumber pn) {
-
+    public void deletePhone(Person p, int pos)
+    {
+        model.deletePhone(p,pos);
     }
 
     @Override

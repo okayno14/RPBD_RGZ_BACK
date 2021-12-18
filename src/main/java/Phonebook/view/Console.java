@@ -337,13 +337,13 @@ public class Console extends View
                 +"------------------------------------------------"
         );
         drawPhoneNumbers(currentPerson.getPhoneNumberSet());
-        System.out.println("Введите индекс удаляемого телефона");
-
-        System.out.println("Введите номер для удаления ");
-        String numberDelete = get_a_Number();
-        int typeDelete = get_a_type();
-        PhoneNumber phoneNumberDelete = new PhoneNumber(new PhoneType(typeDelete),numberDelete);
-        userInterface.deletePhone(currentPerson,phoneNumberDelete);
+        int pos=-1;
+        while(pos<0 || pos>currentPerson.getPhoneNumberSet().size())
+        {
+            System.out.println("Введите индекс удаляемого телефона");
+            pos = in.nextInt();
+        }
+        userInterface.deletePhone(currentPerson,pos);
     }
     private void deleteContact(){
         System.out.println(

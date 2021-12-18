@@ -264,7 +264,19 @@ public class Model
             if(countReferences(buf)==0)
                 delete(buf);
 
+
+        transaction.commit();
+    }
+
+    public void deletePhone(Person p, int pos)
+    {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+            PhoneNumber buf = p.findElem(pos).next();
+            p.deletePhone(pos);
             session.update(p);
+            if(countReferences(buf)==0)
+                delete(buf);
         transaction.commit();
     }
 

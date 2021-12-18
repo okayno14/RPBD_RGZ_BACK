@@ -12,7 +12,7 @@ public interface Phonebook {
     void deleteContact(Person p);
     void addPhone(Person p, PhoneNumber pn);
     void changePhone(Person p,int pos,PhoneNumber newPn);
-    void deletePhone(Person p, PhoneNumber pn);
+    void deletePhone(Person p, int pos);
     void changeAddress(Person p, Address add);
     void deleteAddress(Person p);
     void findFIOALL(String lastName,String firstName, String fatherName);
