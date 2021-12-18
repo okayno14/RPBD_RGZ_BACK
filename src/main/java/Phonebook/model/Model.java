@@ -199,7 +199,7 @@ public class Model
         Session session = sessionFactory.getCurrentSession();
         new_=insert(new_);
 
-        if(countReferences(old_)==1)
+        if(countReferences(old_)==0)
             delete(old_);
 
         return new_;
@@ -211,7 +211,10 @@ public class Model
         Session session = sessionFactory.getCurrentSession();
         Transaction transaction = session.beginTransaction();
             if(p.address!=null)
+            {
+                p.address.personHashSet.remove(p);
                 p.address = update(p.address,add);
+            }
             else
                 p.address = insert(add);
             session.update(p);
@@ -251,27 +254,56 @@ public class Model
 
     private PhoneNumber insert(PhoneNumber pn)
     {
-        return  null;
+        Session session = sessionFactory.getCurrentSession();
+
+        pn.phoneType=getPhoneType(pn.phoneType);
+        PhoneNumber finded = find(pn);
+        if(finded == null)
+        {
+            session.save(pn);
+            finded=pn;
+        }
+        return  finded;
     }
 
     private PhoneNumber find(PhoneNumber pn)
     {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "from PhoneNumber as pn " +
+                "where " +
+                "pn.number = :number and " +
+                "pn.phoneType.id = :pType";
+        Query q = session.createQuery(hql);
+        q.setParameter("number", pn.number);
+        q.setParameter("pType", pn.phoneType.id);
+        return (PhoneNumber) q.uniqueResult();
     }
 
     private int countReferences(PhoneNumber pn)
     {
-        return 0;
+        Session session = sessionFactory.getCurrentSession();
+
+        String hql = "select pn.personHashSet " +
+                "from PhoneNumber as pn " +
+                "where pn.id = :id";
+
+        Query q = session.createQuery(hql);
+        q.setParameter("id", pn.id);
+        return (int) q.uniqueResult();
     }
 
-    private PhoneType getPhoneType(int id)
+    private PhoneType getPhoneType(PhoneType phoneType)
     {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        return (PhoneType) session.merge(phoneType);
     }
 
     private void update(PhoneNumber old_, PhoneNumber new_)
     {
-
+        Session session = sessionFactory.getCurrentSession();
+        session.save(new_);
+        if(countReferences(old_)==1)
+            delete(old_);
     }
 
     private void delete(PhoneNumber pn)
