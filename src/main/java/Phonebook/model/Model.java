@@ -249,6 +249,25 @@ public class Model
         transaction.commit();
     }
 
+    public void changePhone(Person p, int pos, PhoneNumber new_)
+    {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+            PhoneNumber buf = p.findElem(pos).next();
+
+            p.setPhoneNumber(pos,new_);
+            session.update(p);
+
+            update(buf,new_);
+
+
+            if(countReferences(buf)==0)
+                delete(buf);
+
+            session.update(p);
+        transaction.commit();
+    }
+
     //используется в контексте обновления контакта
     private void delete(Address add)
     {
@@ -292,7 +311,7 @@ public class Model
     {
         Session session = sessionFactory.getCurrentSession();
 
-        String hql = "select pn.personHashSet " +
+        String hql = "select pn.personHashSet.size " +
                 "from PhoneNumber as pn " +
                 "where pn.id = :id";
 

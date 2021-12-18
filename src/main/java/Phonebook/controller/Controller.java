@@ -47,8 +47,9 @@ public class Controller implements Phonebook
     }
 
     @Override
-    public void changePhone(Person p, PhoneNumber oldPn, PhoneNumber newPn) {
-
+    public void changePhone(Person p, int pos, PhoneNumber newPn)
+    {
+        model.changePhone(p,pos,newPn);
     }
 
     @Override

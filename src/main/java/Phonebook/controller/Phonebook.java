@@ -11,7 +11,7 @@ public interface Phonebook {
     void changeContact(Person p,String lastName,String firstName,String fatherName);
     void deleteContact(Person p);
     void addPhone(Person p, PhoneNumber pn);
-    void changePhone(Person p,PhoneNumber oldPn,PhoneNumber newPn);
+    void changePhone(Person p,int pos,PhoneNumber newPn);
     void deletePhone(Person p, PhoneNumber pn);
     void changeAddress(Person p, Address add);
     void deleteAddress(Person p);

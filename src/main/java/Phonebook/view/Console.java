@@ -308,33 +308,37 @@ public class Console extends View
         PhoneNumber phoneNumber = new PhoneNumber(new PhoneType(type),number);
         userInterface.addPhone(currentPerson,phoneNumber);
     }
-    private void updatePhoneNumber(){
+    private void updatePhoneNumber()
+    {
         System.out.println(
                 "------------------------------------------------\n"
                 +"-------| Редактировать номер контакту |---------\n"
                 +"------------------------------------------------"
         );
-        ///Нужно вводить старый номер и новый для замены
-        System.out.println(
-                "Ввод старого номера"
-        );
+        drawPhoneNumbers(currentPerson.getPhoneNumberSet());
+
+        int pos=-1;
+        while(pos<0 || pos>currentPerson.getPhoneNumberSet().size())
+        {
+            System.out.println("Введите индекс удаляемого телефона");
+            pos = in.nextInt();
+        }
+
         String number = get_a_Number();
         int type = get_a_type();
-        PhoneNumber phoneNumberOld = new PhoneNumber(new PhoneType(type),number);
-        System.out.println(
-                "Ввод нового номера"
-        );
-        number = get_a_Number();
-        type = get_a_type();
         PhoneNumber phoneNumberNew = new PhoneNumber(new PhoneType(type),number);
-        userInterface.changePhone(currentPerson,phoneNumberOld,phoneNumberNew);
+        userInterface.changePhone(currentPerson,pos,phoneNumberNew);
     }
+
     private void deletePhone(){
         System.out.println(
                 "------------------------------------------------\n"
-                +"-------| Редактировать номер контакту |---------\n"
+                +"-------| Редактировать номер контакта |---------\n"
                 +"------------------------------------------------"
         );
+        drawPhoneNumbers(currentPerson.getPhoneNumberSet());
+        System.out.println("Введите индекс удаляемого телефона");
+
         System.out.println("Введите номер для удаления ");
         String numberDelete = get_a_Number();
         int typeDelete = get_a_type();

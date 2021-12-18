@@ -58,18 +58,21 @@ public abstract class View
         }
     }
     public void drawPhoneNumbers(Set<PhoneNumber> args){
-        if (args.size() > 0){
-            Iterator<PhoneNumber> iterator = args.iterator();
+        if (args.size() > 0)
+        {
+            Iterator<PhoneNumber> j = args.iterator();
             int i = 0;
-            while (iterator.hasNext()){
+
+            while (j.hasNext())
+            {
                 System.out.print("["+ i + "] ");
                 i++;
-                drawPhoneNumber(args.iterator().next());
+                drawPhoneNumber(j.next());
             }
         }
         else
             System.out.println("Ошибка. Нет номеров.");
-    }//нужно протестить !!!
+    }
     public boolean checkFormat(String number){
         if (number.charAt(1) == '(' &&
             number.charAt(5) == ')' &&

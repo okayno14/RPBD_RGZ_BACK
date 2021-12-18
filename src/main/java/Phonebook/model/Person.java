@@ -95,7 +95,7 @@ public class Person implements Serializable, Comparable<Person>
 
 
 
-    private Iterator<PhoneNumber> findElem(int pos)
+    Iterator<PhoneNumber> findElem(int pos)
     {
         Iterator<PhoneNumber> i = phoneNumberSet.iterator();
         int j=0;
