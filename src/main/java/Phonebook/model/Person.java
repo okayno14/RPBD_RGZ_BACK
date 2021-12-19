@@ -97,7 +97,10 @@ public class Person implements Serializable, Comparable<Person>
         int j=0;
 
         while(i.hasNext() && j < pos)
+        {
+            j++;
             i.next();
+        }
 
         return i;
     }
