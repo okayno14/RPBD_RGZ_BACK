@@ -65,8 +65,10 @@ public class Controller implements Phonebook
     }
 
     @Override
-    public void deleteAddress(Person p) {
-        model.deleteAddress(p);
+    public void deleteAddress(Person p) throws Exception
+    {
+        try {model.deleteAddress(p);}
+        catch (Exception e){throw e;}
     }
 
     @Override

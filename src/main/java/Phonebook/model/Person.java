@@ -91,10 +91,6 @@ public class Person implements Serializable, Comparable<Person>
         else return false;
     }
 
-
-
-
-
     Iterator<PhoneNumber> findElem(int pos)
     {
         Iterator<PhoneNumber> i = phoneNumberSet.iterator();
@@ -134,14 +130,23 @@ public class Person implements Serializable, Comparable<Person>
 
     public void deleteAddress()
     {
-        address.personHashSet.remove(this);
-        address = null;
+        if(address != null)
+        {
+            address.personHashSet.remove(this);
+            address = null;
+        }
     }
 
     //а тут у методов должен остаться модификатор public
     //возврат копии, дабы не было возможности как-то вне контроллера повлиять на данные структуры
     public HashSet<PhoneNumber> getPhoneNumberSet(){return new HashSet<PhoneNumber>(phoneNumberSet);}
-    public Address getAddress(){return (Address) address.clone();}
+    public Address getAddress()
+    {
+        if(address==null)
+            return null;
+        else
+            return (Address) address.clone();
+    }
 
     public String getLastname() {
         return lastname;

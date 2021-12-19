@@ -140,7 +140,7 @@ public class Model
             q.setParameter("number", pn.number);
             q.setParameter("type", pn.phoneType.id);
             List<Person> list = q.getResultList();
-            transaction.commit();
+
 
             if(list.size()>1 || list.size() == 0)
             {
@@ -319,21 +319,20 @@ public class Model
         transaction.commit();
     }
 
-    public void deleteAddress(Person p)
+    public void deleteAddress(Person p) throws Exception
     {
-        Session session = sessionFactory.getCurrentSession();
-        Transaction transaction = session.beginTransaction();
-            if(p.address!=null)
-            {
-                //p.address.personHashSet.remove(p);
-
+        if(p.address!=null)
+        {
+            Session session = sessionFactory.getCurrentSession();
+            Transaction transaction = session.beginTransaction();
                 Address buf = p.address;
                 p.deleteAddress();
                 session.update(p);
                 if(countReferences(buf)==0)
                     delete(buf);
-            }
-        transaction.commit();
+            transaction.commit();
+        }
+        else throw  new Exception("У контакта нет адреса");
     }
     /*Методы обновления Person, связанные с телефонами*/
     public void addPhone(Person p, PhoneNumber pn)
@@ -450,31 +449,23 @@ public class Model
 
     public void deletePerson(Person p) throws HibernateException
     {
-//        Person toDel = checkCollection(p);
-//
-//
-//        try
-//        {
-//            Session session = sessionFactory.getCurrentSession();
-//
-//            session.beginTransaction();
-//                toDel.setAddress(new Address(new Street("ki"),1,2));
-//                countReferences(toDel.address);
-//                session.remove(toDel);
-//            session.getTransaction().commit();
-//        }
-//        catch(Throwable a)
-//        {
-//            System.err.println(a.toString());
-//        }
-////        catch(HibernateException he)
-////        {
-////            bdErr();
-////            throw he;
-////        }
-//        finally
-//        {
-//            personHashSet.remove(toDel);
-//        }
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+            Address add = p.address;
+            p.deleteAddress();
+
+            Iterator<PhoneNumber> i = p.phoneNumberSet.iterator();
+            PhoneNumber elem = null;
+            while (i.hasNext())
+            {
+                elem = i.next();
+                elem.personHashSet.remove(p);
+            }
+            p.phoneNumberSet.clear();
+
+            session.update(p);
+
+            session.delete(p);
+        transaction.commit();
     }
 }

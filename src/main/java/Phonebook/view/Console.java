@@ -106,7 +106,7 @@ public class Console extends View
                     break;
                 case 3:
                     clr();
-                    userInterface.deleteAddress(currentPerson);
+                    deleteAddress();
                     messageEnter();
                     break;
                 case 4:
@@ -254,6 +254,13 @@ public class Console extends View
         }
         return p;
     }
+
+    private void deleteAddress()
+    {
+        try{ userInterface.deleteAddress(currentPerson);}
+        catch (Exception e){System.out.println(e.getMessage());}
+    }
+
     private void findBy4(){
         System.out.println(
                 "------------------------------------------------\n"

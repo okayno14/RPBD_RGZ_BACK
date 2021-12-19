@@ -14,7 +14,7 @@ public interface Phonebook {
     void changePhone(Person p,int pos,PhoneNumber newPn);
     void deletePhone(Person p, int pos);
     void changeAddress(Person p, Address add);
-    void deleteAddress(Person p);
+    void deleteAddress(Person p) throws Exception;
     void findFIOALL(String lastName,String firstName, String fatherName);
     void findContactBy4NumberPhone(int a,int b,int c,int d);
     Person findPerson(String lastName,String firstName, String fatherName) throws Exception;
