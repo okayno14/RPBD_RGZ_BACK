@@ -132,7 +132,7 @@ public abstract class View
         );
         int type = in.nextInt();
         while (true){
-            if (type > 0 || type <= 3)
+            if (type > 0 && type <= 3)
                 return type;
             else
                 System.out.println("Введитте существующий тип");

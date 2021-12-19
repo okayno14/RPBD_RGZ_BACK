@@ -171,6 +171,7 @@ public class Console extends View
         );
     }
     public void pcMenu() {
+        drawPerson(currentPerson);
         System.out.println(
                 "------------------------------------------------\n"
                 +"--------------|  Редактор контакта |------------\n"
@@ -337,7 +338,7 @@ public class Console extends View
         int pos=-1;
         while(pos<0 || pos>currentPerson.getPhoneNumberSet().size())
         {
-            System.out.println("Введите индекс удаляемого телефона");
+            System.out.println("Введите индекс обновляемого телефона");
             pos = in.nextInt();
         }
 
