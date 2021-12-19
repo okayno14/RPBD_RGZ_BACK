@@ -206,6 +206,12 @@ public class Model
             q.setParameter("first", firstName);
             q.setParameter("father", fatherName);
             List<Person> result = q.getResultList();
+
+            //цикл инициализации коллекции телефонов
+            Iterator<Person> i = result.iterator();
+            while(i.hasNext())
+                i.next().phoneNumberSet.size();
+
         transaction.commit();
         return result;
     }
@@ -230,6 +236,12 @@ public class Model
 
             Query q = session.createQuery(hql.toString());
             List<Person> res = q.getResultList();
+
+            //цикл инициализации коллекции телефонов
+            Iterator<Person> i = res.iterator();
+            while(i.hasNext())
+                i.next().phoneNumberSet.size();
+
         transaction.commit();
         return res;
     }
