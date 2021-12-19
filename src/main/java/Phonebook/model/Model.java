@@ -192,6 +192,47 @@ public class Model
             }
     }
 
+    public List<Person> findFIOAll(String lastName, String firstName, String fatherName)
+    {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+            String hql = "from Person as p where " +
+                    "p.lastname = :l and " +
+                    "p.firstname = :first and " +
+                    "p.fathername = :father";
+            Query q = session.createQuery(hql);
+            q.setParameter("l",lastName);
+            q.setParameter("first", firstName);
+            q.setParameter("father", fatherName);
+            List<Person> result = q.getResultList();
+        transaction.commit();
+        return result;
+    }
+
+    public List<Person> findContactBy4NumberPhone(int a, int b, int c, int d)
+    {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+            StringBuffer hql = new StringBuffer("from Person as p " +
+                    "inner join fetch p.phoneNumberSet as num " +
+                    " where num.number like '%");
+            Integer buf = a;
+            hql.append(buf.toString());
+            buf = b;
+            hql.append(buf.toString());
+            hql.append("%");
+            buf = c;
+            hql.append(buf.toString());
+            buf = d;
+            hql.append(buf.toString());
+            hql.append("'");
+
+            Query q = session.createQuery(hql.toString());
+            List<Person> res = q.getResultList();
+        transaction.commit();
+        return res;
+    }
+
     private Address insert(Address add)
     {
         Session session = sessionFactory.getCurrentSession();

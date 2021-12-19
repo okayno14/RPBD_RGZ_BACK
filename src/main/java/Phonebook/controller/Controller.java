@@ -6,6 +6,10 @@ import Phonebook.view.Console;
 import Phonebook.view.View;
 import org.hibernate.HibernateException;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
 public class Controller implements Phonebook
 {
     View ui;
@@ -72,13 +76,59 @@ public class Controller implements Phonebook
     }
 
     @Override
-    public void findFIOALL(String lastName, String firstName, String fatherName) {
+    public void findFIOALL(String lastName, String firstName, String fatherName)
+    {
+        List<Person> res = model.findFIOAll(lastName,firstName,fatherName);
+        if(res.size()==0)
+            ui.noRes();
+        else
+        {
+            Iterator<Person> iter = res.iterator();
+            Person elem=null;
+            int j=0;
+            while(iter.hasNext())
+            {
+                System.out.print("[" + j++ + "] ");
+                elem = iter.next();
+                ui.drawPerson(elem);
 
+                Set<PhoneNumber> nums = elem.getPhoneNumberSet();
+                Iterator<PhoneNumber> iter1 = nums.iterator();
+                while(iter1.hasNext())
+                {
+                    System.out.print("\t");
+                    ui.drawPhoneNumber(iter1.next());
+                }
+            }
+        }
     }
 
     @Override
-    public void findContactBy4NumberPhone(int a, int b, int c, int d) {
+    public void findContactBy4NumberPhone(int a, int b, int c, int d)
+    {
+        List<Person> res = model.findContactBy4NumberPhone(a,b,c,d);
+        if(res.size()==0)
+            ui.noRes();
+        else
+        {
+            Iterator<Person> iter = res.iterator();
+            Person elem=null;
+            int j=0;
+            while(iter.hasNext())
+            {
+                System.out.print("[" + j++ + "] ");
+                elem = iter.next();
+                ui.drawPerson(elem);
 
+                Set<PhoneNumber> nums = elem.getPhoneNumberSet();
+                Iterator<PhoneNumber> iter1 = nums.iterator();
+                while(iter1.hasNext())
+                {
+                    System.out.print("\t");
+                    ui.drawPhoneNumber(iter1.next());
+                }
+            }
+        }
     }
 
     @Override
