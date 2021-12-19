@@ -97,8 +97,8 @@ public class Model
                             "where p.lastname = :lastname and " +
                             "p.firstname = :firstname and " +
                             "p.fathername = :fathername and " +
-                            "p.address is not null or " +
-                            "p.phoneNumberSet.size > 0";
+                            "( p.address is not null or " +
+                            "p.phoneNumberSet.size > 0 )";
                 Query q = session.createQuery(hql);
                 q.setParameter("lastname",p.lastname);
                 q.setParameter("firstname", p.firstname);
@@ -445,6 +445,17 @@ public class Model
     {
         Session session = sessionFactory.getCurrentSession();
         session.delete(pn);
+    }
+
+    public void changeContact(Person p, String lastname, String firstname, String fathername)
+    {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+            p.lastname = lastname;
+            p.firstname = firstname;
+            p.fathername = fathername;
+            session.update(p);
+        transaction.commit();
     }
 
     public void deletePerson(Person p) throws HibernateException

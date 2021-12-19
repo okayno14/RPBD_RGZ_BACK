@@ -99,8 +99,6 @@ public class Controller implements Phonebook
         catch (SearchException se)
         {
             int res = se.quantity();
-            //if(res==0)
-            //    throw new Exception("-1");
             if(res>1 || res == 0)
                 try
                 {
@@ -143,16 +141,14 @@ public class Controller implements Phonebook
                                         throw new Exception("-2");
                                 }
                         }
-
                 }
-
         }
         return contact;
     }
 
     @Override
     public void changeContact(Person p, String lastName, String firstName, String fatherName) {
-
+        model.changeContact(p, lastName, firstName, fatherName);
     }
 
     @Override
