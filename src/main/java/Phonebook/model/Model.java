@@ -113,6 +113,7 @@ public class Model
                 else
                 {
                     Person finded = list.iterator().next();
+                    finded.phoneNumberSet.size();
                     //finded.address.street.addressSet.size();
                     personHashSet.add(finded);
 
