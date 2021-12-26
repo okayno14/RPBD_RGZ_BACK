@@ -189,12 +189,22 @@ public class ControllerREST
                     String firstname = req.params(":firstname");
                     String fathername = req.params(":fathername");
 
-                    return builder.create().toJson(
+                    List<Person> arr;
+
+                    try
+                    {
+                        arr=repo.findFIOALL( lastname,
+                                firstname,
+                                fathername);
+
+                        return builder.create().toJson(
                                 new Data(
-                                    contacts(repo.findFIOALL( lastname,
-                                            firstname,
-                                            fathername))
-                                    ));
+                                        contacts(arr)));
+                    }
+                    catch (SearchException se)
+                    {
+                        return builder.create().toJson(new Error("nothing"));
+                    }
                 });
 
         });
