@@ -51,9 +51,10 @@ public class Console extends View
                             builder.registerTypeAdapter(Street.class,new StreetSerializator());
                             builder.registerTypeAdapter(Address.class,new AddressSerializator());
 
+                            String s="";
                             try(FileWriter out = new FileWriter("street.json"))
                             {
-                                String s = builder.create().
+                                s = builder.create().
                                         toJson(currentPerson.getAddress().
                                                 getStreet());
                                 out.write(s);
@@ -70,7 +71,8 @@ public class Console extends View
                                 while (in.ready())
                                     buf=buf.concat(in.readLine());
                                 Street street = builder.create().fromJson(buf, Street.class);
-                                street.getStreetname();
+                                Address address = builder.create().fromJson(s,Address.class);
+                                address.getHome();
                             }
                             catch (Exception fIn){fIn.printStackTrace();}
 

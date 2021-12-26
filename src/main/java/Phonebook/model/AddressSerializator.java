@@ -18,7 +18,11 @@ public class AddressSerializator implements JsonSerializer<Address>, JsonDeseria
 
     @Override
     public Address deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-        return null;
+        JsonObject object = jsonElement.getAsJsonObject();
+        int home = object.get("home").getAsInt();
+        int appartement = object.get("appartement").getAsInt();
+        Street street = builder.create().fromJson(object.get("street"),Street.class);
+        return new Address(street,home,appartement);
     }
 
     @Override
@@ -26,11 +30,8 @@ public class AddressSerializator implements JsonSerializer<Address>, JsonDeseria
         JsonObject object = new JsonObject();
         object.addProperty("home",address.home);
         object.addProperty("appartement",address.appartement);
-        //object.addProperty("street", builder.create().
-        //        toJsonTree(address.street).getAsString();
         JsonElement jsonElement=builder.create().toJsonTree(address.street);
         object.add("street",jsonElement);
-        //tree.hashCode();
         return object;
     }
 }
