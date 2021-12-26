@@ -30,5 +30,8 @@ public interface Phonebook {
                              String firstName,
                              String fatherName,
                              PhoneNumber pn, Address add) throws SearchException;
+
+    Person getPerson(int id) throws SearchException;
+
     void disconnect();
 }

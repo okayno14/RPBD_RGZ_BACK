@@ -96,6 +96,21 @@ public class Controller implements Phonebook
     }
 
     @Override
+    public Person getPerson(int id) throws SearchException
+    {
+        try
+        {
+            return model.getPerson(id);
+        }
+        catch (SearchException se)
+        {
+            throw se;
+        }
+
+
+    }
+
+    @Override
     public Person findPerson(String lastName,
                              String firstName,
                              String fatherName) throws SearchException

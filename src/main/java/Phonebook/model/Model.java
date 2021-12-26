@@ -542,8 +542,11 @@ public class Model
     }
 
     //может вернуть null
-    public Person getPerson(int id)
+    public Person getPerson(int id) throws SearchException
     {
-        return personMap.get(id);
+        if (personMap.containsKey(id))
+            return personMap.get(id);
+        else
+            throw new SearchException(0);
     }
 }

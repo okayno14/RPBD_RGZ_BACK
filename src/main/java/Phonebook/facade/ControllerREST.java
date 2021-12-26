@@ -233,8 +233,24 @@ public class ControllerREST
             }
         });
 
-
         get("/hello",(req,resp)->"Hello, World");
+
+        put("/update/address/:id",(req,resp)->
+        {
+            try
+            {
+                repo.changeAddress(repo.getPerson(Integer.parseInt(req.params(":id"))),
+                        builder.create().fromJson(req.body(),Address.class));
+
+                resp.status(200);
+                return builder.create().toJson(new Notification());
+            }
+            catch (SearchException se)
+            {
+                resp.status(404);
+                return builder.create().toJson(new Error("Incorrect id"));
+            }
+        });
 
     }
 
