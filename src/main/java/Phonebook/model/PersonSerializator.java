@@ -23,6 +23,8 @@ public class PersonSerializator implements JsonSerializer<Person>, JsonDeseriali
     @Override
     public JsonElement serialize(Person person, Type type, JsonSerializationContext jsonSerializationContext) {
         JsonObject object = new JsonObject();
+
+        object.addProperty("id",person.id);
         object.addProperty("lastname", person.lastname);
         object.addProperty("firstname", person.firstname);
         object.addProperty("fathername", person.fathername);
