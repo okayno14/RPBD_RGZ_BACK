@@ -4,6 +4,7 @@ import Phonebook.controller.Controller;
 import Phonebook.controller.Phonebook;
 import Phonebook.model.*;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import spark.Spark;
 
@@ -34,6 +35,8 @@ public class ControllerREST
         System.out.println(Spark.port());
 
     }
+
+    //private JsonElement contacts()
 
     public static void endpoints()
     {

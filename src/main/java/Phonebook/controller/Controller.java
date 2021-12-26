@@ -76,59 +76,23 @@ public class Controller implements Phonebook
     }
 
     @Override
-    public void findFIOALL(String lastName, String firstName, String fatherName)
+    public List<Person> findFIOALL(String lastName, String firstName, String fatherName) throws SearchException
     {
         List<Person> res = model.findFIOAll(lastName,firstName,fatherName);
         if(res.size()==0)
-            ui.noRes();
+            throw new SearchException(0);
         else
-        {
-            Iterator<Person> iter = res.iterator();
-            Person elem=null;
-            int j=0;
-            while(iter.hasNext())
-            {
-                System.out.print("[" + j++ + "] ");
-                elem = iter.next();
-                ui.drawPerson(elem);
-
-                Set<PhoneNumber> nums = elem.getPhoneNumberSet();
-                Iterator<PhoneNumber> iter1 = nums.iterator();
-                while(iter1.hasNext())
-                {
-                    System.out.print("\t");
-                    ui.drawPhoneNumber(iter1.next());
-                }
-            }
-        }
+            return res;
     }
 
     @Override
-    public void findContactBy4NumberPhone(int a, int b, int c, int d)
+    public List<Person> findContactBy4NumberPhone(int a, int b, int c, int d) throws SearchException
     {
         List<Person> res = model.findContactBy4NumberPhone(a,b,c,d);
         if(res.size()==0)
-            ui.noRes();
+            throw new SearchException(0);
         else
-        {
-            Iterator<Person> iter = res.iterator();
-            Person elem=null;
-            int j=0;
-            while(iter.hasNext())
-            {
-                System.out.print("[" + j++ + "] ");
-                elem = iter.next();
-                ui.drawPerson(elem);
-
-                Set<PhoneNumber> nums = elem.getPhoneNumberSet();
-                Iterator<PhoneNumber> iter1 = nums.iterator();
-                while(iter1.hasNext())
-                {
-                    System.out.print("\t");
-                    ui.drawPhoneNumber(iter1.next());
-                }
-            }
-        }
+            return res;
     }
 
     @Override

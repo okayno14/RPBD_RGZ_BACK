@@ -5,6 +5,9 @@ import Phonebook.model.Person;
 import Phonebook.model.PhoneNumber;
 import Phonebook.model.SearchException;
 
+import java.util.List;
+import java.util.Set;
+
 //Интерфейс через который пользовательский класс View общается с
 //контроллером
 public interface Phonebook {
@@ -16,8 +19,8 @@ public interface Phonebook {
     void deletePhone(Person p, int pos);
     void changeAddress(Person p, Address add);
     void deleteAddress(Person p) throws Exception;
-    void findFIOALL(String lastName,String firstName, String fatherName);
-    void findContactBy4NumberPhone(int a,int b,int c,int d);
+    List<Person> findFIOALL(String lastName,String firstName, String fatherName) throws SearchException;
+    List<Person> findContactBy4NumberPhone(int a, int b, int c, int d) throws SearchException;
     Person findPerson(String lastName,String firstName, String fatherName) throws SearchException;
     Person findPerson(String lastName,
                              String firstName,
