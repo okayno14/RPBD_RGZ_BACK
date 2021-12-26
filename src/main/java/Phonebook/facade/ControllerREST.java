@@ -37,7 +37,7 @@ public class ControllerREST
 
     public static void endpoints()
     {
-       get("/hello",(req,resp)->"Hello, World");
+        get("/hello",(req,resp)->"Hello, World");
     }
 
 
