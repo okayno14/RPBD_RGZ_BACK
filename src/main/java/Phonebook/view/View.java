@@ -126,7 +126,7 @@ public abstract class View
     public int get_a_type(){
         System.out.println(
                 "Введите тип номера телефона\n"
-                +"[1] - моюильный \n"
+                +"[1] - мобильный \n"
                 +"[2] - рабочий \n"
                 +"[3] - домашний"
         );

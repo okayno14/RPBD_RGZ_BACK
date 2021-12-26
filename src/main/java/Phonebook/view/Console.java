@@ -50,6 +50,8 @@ public class Console extends View
                             builder.setPrettyPrinting();
                             builder.registerTypeAdapter(Street.class,new StreetSerializator());
                             builder.registerTypeAdapter(Address.class,new AddressSerializator());
+                            builder.registerTypeAdapter(PhoneType.class,new PhoneTypeSerializator());
+                            builder.registerTypeAdapter(PhoneNumber.class,new PhoneNumberSerializer());
 
                             String s="";
                             try(FileWriter out = new FileWriter("street.json"))
@@ -61,6 +63,19 @@ public class Console extends View
 
                                 s = builder.create().
                                         toJson(currentPerson.getAddress());
+
+
+                                s=builder.create().
+                                        toJson(
+                                                currentPerson.
+                                                        getPhoneNumberSet().iterator().next());
+
+                                FileWriter out_1 = new FileWriter("phoneNumber.json");
+                                    out_1.write(s);
+                                out_1.close();
+
+                                PhoneNumber phoneNumber = builder.create().
+                                        fromJson(s,PhoneNumber.class);
                                 System.out.println(s);
                             }
                             catch (Exception fOut){fOut.printStackTrace();}
@@ -71,8 +86,8 @@ public class Console extends View
                                 while (in.ready())
                                     buf=buf.concat(in.readLine());
                                 Street street = builder.create().fromJson(buf, Street.class);
-                                Address address = builder.create().fromJson(s,Address.class);
-                                address.getHome();
+                                //Address address = builder.create().fromJson(s,Address.class);
+                                //address.getHome();
                             }
                             catch (Exception fIn){fIn.printStackTrace();}
 
@@ -81,7 +96,7 @@ public class Console extends View
 
                             if (toRunMenuTwo())
                                 pcRun();
-                        } catch(Exception e)
+                        } catch(Exception e) {e.printStackTrace();}
                         {}
                         messageEnter();
                         break;
