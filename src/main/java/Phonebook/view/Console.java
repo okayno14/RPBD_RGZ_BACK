@@ -5,12 +5,11 @@ import Phonebook.controller.Phonebook;
 import Phonebook.model.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import org.eclipse.jetty.io.WriterOutputStream;
-import org.w3c.dom.ls.LSOutput;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
+
+import java.io.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -47,15 +46,36 @@ public class Console extends View
                             currentPerson = findPerson();
                             drawPerson(currentPerson);
 
-//                            try(FileWriter out = new FileWriter("currentPerson.json"))
-//                            {
-//                                GsonBuilder builder = new GsonBuilder();
-//                                builder.registerTypeAdapter(Street.class,new StreetSerializator());
-//
-//                                String s = builder.create().toJson(currentPerson.getAddress());
-//                                out.write(s);
-//                            }
-//                            catch (Exception f){f.printStackTrace();}
+                            GsonBuilder builder = new GsonBuilder();
+                            builder.setPrettyPrinting();
+                            builder.registerTypeAdapter(Street.class,new StreetSerializator());
+                            builder.registerTypeAdapter(Address.class,new AddressSerializator());
+
+                            try(FileWriter out = new FileWriter("street.json"))
+                            {
+                                String s = builder.create().
+                                        toJson(currentPerson.getAddress().
+                                                getStreet());
+                                out.write(s);
+
+                                s = builder.create().
+                                        toJson(currentPerson.getAddress());
+                                System.out.println(s);
+                            }
+                            catch (Exception fOut){fOut.printStackTrace();}
+
+                            try(BufferedReader in = new BufferedReader(new FileReader("street.json")))
+                            {
+                                String buf="";
+                                while (in.ready())
+                                    buf=buf.concat(in.readLine());
+                                Street street = builder.create().fromJson(buf, Street.class);
+                                street.getStreetname();
+                            }
+                            catch (Exception fIn){fIn.printStackTrace();}
+
+
+
 
                             if (toRunMenuTwo())
                                 pcRun();
