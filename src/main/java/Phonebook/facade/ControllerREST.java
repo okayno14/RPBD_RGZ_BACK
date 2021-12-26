@@ -5,6 +5,7 @@ import Phonebook.controller.Phonebook;
 import Phonebook.model.*;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import spark.Spark;
 
@@ -31,6 +32,9 @@ public class ControllerREST
         builder.registerTypeAdapter(PhoneNumber.class,new PhoneNumberSerializer());
         builder.registerTypeAdapter(Person.class, new PersonSerializator(builder));
 
+        staticFileLocation("/static");
+
+
         Spark.ipAddress("192.168.1.92");
         endpoints();
         System.out.println(Spark.port());
@@ -44,7 +48,102 @@ public class ControllerREST
 
     public static void endpoints()
     {
+
+
+        post("/add/person",(req,resp)->
+        {
+            resp.type("application/json");
+            Person p = builder.create().fromJson(req.body(),Person.class);
+            p = repo.addContact(p.getLastname(),
+                                p.getFirstname(),
+                                p.getFathername());
+
+            JsonObject o =  new JsonObject();
+            o.addProperty("id",p.getId());
+
+            return builder.create().toJson
+                    (new Data(builder.create().toJsonTree(o)));
+        });
+
+//        get("/find/person/:lastname/:firstname/:fathername/empty",(req,resp)->
+//        {
+//            resp.type("application/json");
+//
+//            String lastname = req.params(":lastname");
+//            String firstname = req.params(":firstname");
+//            String fathername = req.params(":fathername");
+//
+//            Person finded=null;
+//            try
+//            {
+//                finded = repo.findPerson(lastname,firstname,fathername);
+//                resp.status(200);
+//                return builder.create().toJson
+//                        (new Data(builder.create().toJsonTree(finded)));
+//            }
+//            catch (SearchException se)
+//            {
+//                StringBuffer stringBuffer = new StringBuffer();
+//                stringBuffer.append("Error. Finded ");
+//                stringBuffer.append(Integer.toString(se.quantity()));
+//                stringBuffer.append(" elements");
+//
+//                if(se.quantity() ==0)
+//                    resp.status(404);
+//                else
+//                    resp.status(402);
+//
+//            return  builder.create().toJson
+//                        (new Error(stringBuffer.toString()));
+//            }
+//        });
+
+        path("/find/person/:lastname/:firstname/:fathername",()->
+        {
+                get("/empty",(req,resp)->
+                {
+                    resp.type("application/json");
+
+                    String lastname = req.params(":lastname");
+                    String firstname = req.params(":firstname");
+                    String fathername = req.params(":fathername");
+
+                    Person finded=null;
+                    try
+                    {
+                        finded = repo.findPerson(lastname,firstname,fathername);
+                        resp.status(200);
+                        return builder.create().toJson
+                                (new Data(builder.create().toJsonTree(finded)));
+                    }
+                    catch (SearchException se)
+                    {
+                        StringBuffer stringBuffer = new StringBuffer();
+                        stringBuffer.append("Error. Finded ");
+                        stringBuffer.append(Integer.toString(se.quantity()));
+                        stringBuffer.append(" elements");
+
+                        if(se.quantity() ==0)
+                            resp.status(404);
+                        else
+                            resp.status(402);
+
+                        return  builder.create().toJson
+                                (new Error(stringBuffer.toString()));
+                    }
+                });
+
+                get("/:pn/:type",(req,resp)->
+                {
+
+                });
+
+        });
+
+
+
         get("/hello",(req,resp)->"Hello, World");
+
     }
 
 

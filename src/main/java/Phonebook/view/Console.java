@@ -283,7 +283,7 @@ public class Console extends View
             }
             System.out.println("Введите 4 числа");
         }
-        userInterface.findContactBy4NumberPhone((numberBy4/1000),((numberBy4%1000)/100),((numberBy4%100)/10),(numberBy4%10));
+        //userInterface.findContactBy4NumberPhone((numberBy4/1000),((numberBy4%1000)/100),((numberBy4%100)/10),(numberBy4%10));
     }
     private void findList_FIO(){
         System.out.println(
@@ -294,7 +294,7 @@ public class Console extends View
         String last = get_a_lastNamePerson();
         String first = get_a_firstNamePerson();
         String father = get_a_fatherNamePerson();
-        userInterface.findFIOALL(last,first,father);
+        //userInterface.findFIOALL(last,first,father);
     }
     private void updateFIOContact(){
         System.out.println(

@@ -151,6 +151,8 @@ public class Person implements Serializable, Comparable<Person>
             return (Address) address.clone();
     }
 
+    public int getId(){return id;}
+
     public String getLastname() {
         return lastname;
     }
