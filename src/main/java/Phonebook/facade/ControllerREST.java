@@ -10,6 +10,7 @@ import spark.Spark;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import static spark.Spark.*;
 
@@ -36,7 +37,10 @@ public class ControllerREST
 
     }
 
-    //private JsonElement contacts()
+    private JsonElement contacts(List<Person> contacts)
+    {
+        return builder.create().toJsonTree(contacts);
+    }
 
     public static void endpoints()
     {
