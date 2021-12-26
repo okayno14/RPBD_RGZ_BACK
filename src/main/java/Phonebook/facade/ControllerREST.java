@@ -135,17 +135,11 @@ public class ControllerREST
 
                 get("/:pn/:type",(req,resp)->
                 {
-                    System.out.println("Зашли в ендпоинт");
-
                     resp.type("application/json");
-
                     String lastname = req.params(":lastname");
                     String firstname = req.params(":firstname");
                     String fathername = req.params(":fathername");
-
-
                     String number = req.params(":pn");
-
                     int type = Integer.parseInt(req.params(":type"));
                     PhoneNumber pn = new PhoneNumber(new PhoneType(type),number);
 
@@ -157,8 +151,49 @@ public class ControllerREST
                                                 firstname,
                                                 fathername,
                                                 pn);
+                        return builder.create().toJson
+                                (new Data(builder.create().toJsonTree(finded)));
+                    }
+                    catch (SearchException se)
+                    {
+                        StringBuffer stringBuffer = new StringBuffer();
+                        stringBuffer.append("Error. Finded ");
+                        stringBuffer.append(Integer.toString(se.quantity()));
+                        stringBuffer.append(" elements");
 
-                        System.out.println(finded.getId());
+                        if(se.quantity() ==0)
+                            resp.status(404);
+                        else
+                            resp.status(402);
+
+                        return  builder.create().toJson
+                                (new Error(stringBuffer.toString()));
+                    }
+                });
+
+                get("/:pn/:type/:home/:appartement/:streetname",(req,resp)->
+                {
+                    resp.type("application/json");
+                    String lastname = req.params(":lastname");
+                    String firstname = req.params(":firstname");
+                    String fathername = req.params(":fathername");
+                    String number = req.params(":pn");
+                    int type = Integer.parseInt(req.params(":type"));
+                    PhoneNumber pn = new PhoneNumber(new PhoneType(type),number);
+
+                    int home = Integer.parseInt(req.params(":home"));
+                    int appartement = Integer.parseInt(req.params(":appartement"));
+                    String street = req.params(":streetname");
+                    Address add = new Address(new Street(street),home,appartement);
+
+                    Person finded=null;
+
+                    try
+                    {
+                        finded = repo.findPerson(lastname,
+                                firstname,
+                                fathername,
+                                pn,add);
                         return builder.create().toJson
                                 (new Data(builder.create().toJsonTree(finded)));
                     }
