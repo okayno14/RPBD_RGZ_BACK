@@ -37,26 +37,7 @@ public class ControllerREST
 
     public static void endpoints()
     {
-        String noAddr = "{\n" +
-                "  \"lastname\": \"q\",\n" +
-                "  \"firstname\": \"q\",\n" +
-                "  \"fathername\": \"q\",\n" +
-                "  \"phoneNumberSet\": [\n" +
-                "    {\n" +
-                "      \"number\": \"8(888)888-88-88\",\n" +
-                "      \"phoneType\": {\n" +
-                "        \"id\": 1\n" +
-                "      }\n" +
-                "    }\n" +
-                "  ]\n" +
-                "}";
-
-        Person p = builder.create().fromJson(noAddr,Person.class);
-
-        //Type token = new TypeToken<ArrayList<PhoneNumber>>() {}.getType();
-        //ArrayList<PhoneNumber> phones = builder.create().fromJson(noAddr,token);
-
-        get("/hello",(req,resp)->"Hello, World");
+       get("/hello",(req,resp)->"Hello, World");
     }
 
 

@@ -132,16 +132,13 @@ public class Controller implements Phonebook
     }
 
     @Override
-    public Person findPerson(String lastName, String firstName, String fatherName) throws Exception {
-        if (lastName == null || firstName == null || fatherName == null){
-            System.out.println("не все данные!");
-            Exception exception = new Exception("-1");
-            throw exception;
-        }
+    public Person findPerson(String lastName,
+                             String firstName,
+                             String fatherName) throws SearchException
+    {
+
         Person data = new Person(lastName,firstName,fatherName);
         Person contact=null;
-        PhoneNumber pn=null;
-        Address add=null;
         try
         {
             contact = model.findPerson(data,true);
@@ -156,43 +153,49 @@ public class Controller implements Phonebook
                 }
                 catch(SearchException se1)
                 {
-                    res=se1.quantity();
-                    if(res==0)
-                        throw new Exception("-1");
-                    if(res>1)
-                        try
-                        {
-                            String number = ui.get_a_Number();
-                            int type = ui.get_a_type();
-                            pn = new PhoneNumber(new PhoneType(type),number);
-                            contact =  model.findPerson(data,pn);
-                        }
-                        catch (SearchException se2)
-                        {
-                            res = se2.quantity();
-                            if(res==0)
-                                throw new Exception("-1");
-                            if(res>1 && pn != null)
-                                try
-                                {
-                                    String streetname = ui.get_a_addressName();
-                                    int home = ui.get_a_numberHome();
-                                    int appartement = ui.get_a_numberApartment();
-                                    add = new Address(new Street(streetname),home,appartement);
-                                    contact = model.findPerson(data,pn,add);
-
-                                }
-                                catch(SearchException se3)
-                                {
-                                    res = se3.quantity();
-                                    if (res==0)
-                                        throw new Exception("-1");
-                                    if(res>1)
-                                        throw new Exception("-2");
-                                }
-                        }
+                    throw se1;
                 }
         }
+        return contact;
+    }
+
+    public Person findPerson(String lastName,
+                             String firstName,
+                             String fatherName,
+                             PhoneNumber pn) throws SearchException
+    {
+        Person data = new Person(lastName,firstName,fatherName);
+        Person contact=null;
+
+        try
+        {
+            contact =  model.findPerson(data,pn);
+        }
+        catch (SearchException se2)
+        {
+            throw se2;
+        }
+
+        return contact;
+    }
+
+    public Person findPerson(String lastName,
+                             String firstName,
+                             String fatherName,
+                             PhoneNumber pn, Address add) throws SearchException
+    {
+        Person data = new Person(lastName,firstName,fatherName);
+        Person contact=null;
+
+        try
+        {
+            contact = model.findPerson(data,pn,add);
+        }
+        catch(SearchException se3)
+        {
+            throw se3;
+        }
+
         return contact;
     }
 

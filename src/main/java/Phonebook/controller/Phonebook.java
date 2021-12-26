@@ -3,6 +3,7 @@ package Phonebook.controller;
 import Phonebook.model.Address;
 import Phonebook.model.Person;
 import Phonebook.model.PhoneNumber;
+import Phonebook.model.SearchException;
 
 //Интерфейс через который пользовательский класс View общается с
 //контроллером
@@ -17,6 +18,14 @@ public interface Phonebook {
     void deleteAddress(Person p) throws Exception;
     void findFIOALL(String lastName,String firstName, String fatherName);
     void findContactBy4NumberPhone(int a,int b,int c,int d);
-    Person findPerson(String lastName,String firstName, String fatherName) throws Exception;
+    Person findPerson(String lastName,String firstName, String fatherName) throws SearchException;
+    Person findPerson(String lastName,
+                             String firstName,
+                             String fatherName,
+                             PhoneNumber pn) throws SearchException;
+    Person findPerson(String lastName,
+                             String firstName,
+                             String fatherName,
+                             PhoneNumber pn, Address add) throws SearchException;
     void disconnect();
 }
