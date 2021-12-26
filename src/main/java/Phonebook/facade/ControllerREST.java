@@ -133,10 +133,51 @@ public class ControllerREST
                     }
                 });
 
-//                get("/:pn/:type",(req,resp)->
-//                {
-//                    return  n
-//                });
+                get("/:pn/:type",(req,resp)->
+                {
+                    System.out.println("Зашли в ендпоинт");
+
+                    resp.type("application/json");
+
+                    String lastname = req.params(":lastname");
+                    String firstname = req.params(":firstname");
+                    String fathername = req.params(":fathername");
+
+
+                    String number = req.params(":pn");
+
+                    int type = Integer.parseInt(req.params(":type"));
+                    PhoneNumber pn = new PhoneNumber(new PhoneType(type),number);
+
+                    Person finded=null;
+
+                    try
+                    {
+                        finded = repo.findPerson(lastname,
+                                                firstname,
+                                                fathername,
+                                                pn);
+
+                        System.out.println(finded.getId());
+                        return builder.create().toJson
+                                (new Data(builder.create().toJsonTree(finded)));
+                    }
+                    catch (SearchException se)
+                    {
+                        StringBuffer stringBuffer = new StringBuffer();
+                        stringBuffer.append("Error. Finded ");
+                        stringBuffer.append(Integer.toString(se.quantity()));
+                        stringBuffer.append(" elements");
+
+                        if(se.quantity() ==0)
+                            resp.status(404);
+                        else
+                            resp.status(402);
+
+                        return  builder.create().toJson
+                                (new Error(stringBuffer.toString()));
+                    }
+                });
 
         });
 
