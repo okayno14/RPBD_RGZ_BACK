@@ -48,48 +48,25 @@ public class Console extends View
 
                             GsonBuilder builder = new GsonBuilder();
                             builder.setPrettyPrinting();
-                            builder.registerTypeAdapter(Street.class,new StreetSerializator());
-                            builder.registerTypeAdapter(Address.class,new AddressSerializator());
-                            builder.registerTypeAdapter(PhoneType.class,new PhoneTypeSerializator());
-                            builder.registerTypeAdapter(PhoneNumber.class,new PhoneNumberSerializer());
+                            builder.registerTypeAdapter(Person.class, new PersonSerializator());
 
-                            String s="";
-                            try(FileWriter out = new FileWriter("street.json"))
+
+                            try(FileWriter out = new FileWriter("person.json"))
                             {
+                                String s ="";
                                 s = builder.create().
-                                        toJson(currentPerson.getAddress().
-                                                getStreet());
+                                        toJson(currentPerson);
                                 out.write(s);
-
-                                s = builder.create().
-                                        toJson(currentPerson.getAddress());
-
-
-                                s=builder.create().
-                                        toJson(
-                                                currentPerson.
-                                                        getPhoneNumberSet().iterator().next());
-
-                                FileWriter out_1 = new FileWriter("phoneNumber.json");
-                                    out_1.write(s);
-                                out_1.close();
-
-                                PhoneNumber phoneNumber = builder.create().
-                                        fromJson(s,PhoneNumber.class);
-                                System.out.println(s);
                             }
                             catch (Exception fOut){fOut.printStackTrace();}
 
-                            try(BufferedReader in = new BufferedReader(new FileReader("street.json")))
-                            {
-                                String buf="";
-                                while (in.ready())
-                                    buf=buf.concat(in.readLine());
-                                Street street = builder.create().fromJson(buf, Street.class);
-                                //Address address = builder.create().fromJson(s,Address.class);
-                                //address.getHome();
-                            }
-                            catch (Exception fIn){fIn.printStackTrace();}
+//                            try(BufferedReader in = new BufferedReader(new FileReader("street.json")))
+//                            {
+//                                String buf="";
+//                                while (in.ready())
+//                                    buf=buf.concat(in.readLine());
+//                            }
+//                            catch (Exception fIn){fIn.printStackTrace();}
 
 
 

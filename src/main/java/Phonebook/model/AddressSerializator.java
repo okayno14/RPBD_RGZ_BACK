@@ -7,7 +7,7 @@ import java.lang.reflect.Type;
 
 public class AddressSerializator implements JsonSerializer<Address>, JsonDeserializer<Address>
 {
-    GsonBuilder builder;
+    private GsonBuilder builder;
 
     public AddressSerializator()
     {

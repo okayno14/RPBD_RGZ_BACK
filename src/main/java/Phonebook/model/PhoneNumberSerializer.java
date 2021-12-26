@@ -6,7 +6,7 @@ import java.lang.reflect.Type;
 
 public class PhoneNumberSerializer implements JsonSerializer<PhoneNumber>, JsonDeserializer<PhoneNumber>
 {
-    GsonBuilder builder;
+    private GsonBuilder builder;
 
     public PhoneNumberSerializer()
     {
