@@ -41,7 +41,7 @@ public class ControllerREST
 
     }
 
-    private JsonElement contacts(List<Person> contacts)
+    private static JsonElement contacts(List<Person> contacts)
     {
         return builder.create().toJsonTree(contacts);
     }
@@ -64,39 +64,6 @@ public class ControllerREST
             return builder.create().toJson
                     (new Data(builder.create().toJsonTree(o)));
         });
-
-//        get("/find/person/:lastname/:firstname/:fathername/empty",(req,resp)->
-//        {
-//            resp.type("application/json");
-//
-//            String lastname = req.params(":lastname");
-//            String firstname = req.params(":firstname");
-//            String fathername = req.params(":fathername");
-//
-//            Person finded=null;
-//            try
-//            {
-//                finded = repo.findPerson(lastname,firstname,fathername);
-//                resp.status(200);
-//                return builder.create().toJson
-//                        (new Data(builder.create().toJsonTree(finded)));
-//            }
-//            catch (SearchException se)
-//            {
-//                StringBuffer stringBuffer = new StringBuffer();
-//                stringBuffer.append("Error. Finded ");
-//                stringBuffer.append(Integer.toString(se.quantity()));
-//                stringBuffer.append(" elements");
-//
-//                if(se.quantity() ==0)
-//                    resp.status(404);
-//                else
-//                    resp.status(402);
-//
-//            return  builder.create().toJson
-//                        (new Error(stringBuffer.toString()));
-//            }
-//        });
 
         path("/find/person/:lastname/:firstname/:fathername",()->
         {
@@ -212,6 +179,22 @@ public class ControllerREST
                         return  builder.create().toJson
                                 (new Error(stringBuffer.toString()));
                     }
+                });
+
+                get("/list",(req,resp)->
+                {
+                    resp.type("application/json");
+
+                    String lastname = req.params(":lastname");
+                    String firstname = req.params(":firstname");
+                    String fathername = req.params(":fathername");
+
+                    return builder.create().toJson(
+                                new Data(
+                                    contacts(repo.findFIOALL( lastname,
+                                            firstname,
+                                            fathername))
+                                    ));
                 });
 
         });
