@@ -209,6 +209,29 @@ public class ControllerREST
 
         });
 
+        get("/find/person/:a/:b/:c/:d",(req,resp)->
+        {
+            resp.type("application/json");
+            int a = Integer.parseInt(req.params(":a"));
+            int b = Integer.parseInt(req.params(":b"));
+            int c = Integer.parseInt(req.params(":c"));
+            int d = Integer.parseInt(req.params(":d"));
+
+            List<Person> arr;
+
+            try
+            {
+                arr=repo.findContactBy4NumberPhone(a,b,c,d);
+
+                return builder.create().toJson(
+                        new Data(
+                                contacts(arr)));
+            }
+            catch (SearchException se)
+            {
+                return builder.create().toJson(new Error("nothing"));
+            }
+        });
 
 
         get("/hello",(req,resp)->"Hello, World");
