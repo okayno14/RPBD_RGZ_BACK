@@ -8,9 +8,9 @@ public class PersonSerializator implements JsonSerializer<Person>, JsonDeseriali
 {
     private GsonBuilder builder;
 
-    public PersonSerializator()
+    public PersonSerializator(GsonBuilder builder)
     {
-        builder = new GsonBuilder();
+        this.builder = builder;
         builder.registerTypeAdapter(Street.class,new StreetSerializator());
         builder.registerTypeAdapter(Address.class,new AddressSerializator());
         builder.registerTypeAdapter(PhoneType.class,new PhoneTypeSerializator());

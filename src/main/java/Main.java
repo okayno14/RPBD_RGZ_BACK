@@ -1,7 +1,6 @@
 import Phonebook.controller.Controller;
-import Phonebook.model.*;
-import Phonebook.view.Console;
-
+import Phonebook.facade.ControllerREST;
+import Phonebook.view.Console_server;
 
 
 public class Main
@@ -9,8 +8,11 @@ public class Main
     static public void main(String[] args)
     {
         Controller controller = new Controller();
-        Console cli = new Console(controller);
-        controller.setView(cli);
-        cli.run();
+        Console_server console_server = new Console_server(controller);
+        controller.setView(console_server);
+
+        //в конструкторе инициализируются нужные для сервера объекты
+        //и эндпойнты
+        ControllerREST controllerREST = new ControllerREST(args);
     }
 }

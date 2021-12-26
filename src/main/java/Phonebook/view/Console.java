@@ -45,32 +45,6 @@ public class Console extends View
                         {
                             currentPerson = findPerson();
                             drawPerson(currentPerson);
-
-                            GsonBuilder builder = new GsonBuilder();
-                            builder.setPrettyPrinting();
-                            builder.registerTypeAdapter(Person.class, new PersonSerializator());
-
-
-                            try(FileWriter out = new FileWriter("person.json"))
-                            {
-                                String s ="";
-                                s = builder.create().
-                                        toJson(currentPerson);
-                                out.write(s);
-                            }
-                            catch (Exception fOut){fOut.printStackTrace();}
-
-//                            try(BufferedReader in = new BufferedReader(new FileReader("street.json")))
-//                            {
-//                                String buf="";
-//                                while (in.ready())
-//                                    buf=buf.concat(in.readLine());
-//                            }
-//                            catch (Exception fIn){fIn.printStackTrace();}
-
-
-
-
                             if (toRunMenuTwo())
                                 pcRun();
                         } catch(Exception e) {e.printStackTrace();}
