@@ -133,10 +133,10 @@ public class ControllerREST
                     }
                 });
 
-                get("/:pn/:type",(req,resp)->
-                {
-
-                });
+//                get("/:pn/:type",(req,resp)->
+//                {
+//                    return  n
+//                });
 
         });
 
