@@ -13,6 +13,6 @@ public class Main
 
         //в конструкторе инициализируются нужные для сервера объекты
         //и эндпойнты
-        ControllerREST controllerREST = new ControllerREST(args);
+        ControllerREST controllerREST = new ControllerREST(args, controller);
     }
 }

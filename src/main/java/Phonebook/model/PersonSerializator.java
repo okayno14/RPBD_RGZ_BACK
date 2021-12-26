@@ -1,8 +1,11 @@
 package Phonebook.model;
 
 import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.Set;
+
 
 public class PersonSerializator implements JsonSerializer<Person>, JsonDeserializer<Person>
 {
@@ -39,6 +42,23 @@ public class PersonSerializator implements JsonSerializer<Person>, JsonDeseriali
         String lastname = object.get("lastname").getAsString();
         String firstname = object.get("firstname").getAsString();
         String fathername = object.get("fathername").getAsString();
-        return new Person(lastname,firstname,fathername);
+
+        Person p = new Person(lastname,firstname,fathername);
+
+        if(object.has("address"))
+        {
+            Address add = builder.create().fromJson(object.get("address"),Address.class);
+            p.address=add;
+        }
+
+        if(object.has("phoneNumberSet"))
+        {
+            Type t = new TypeToken<Set<PhoneNumber>>() {}.getType();
+            Set<PhoneNumber> phoneNumberSet = builder.create().
+                    fromJson(object.get("phoneNumberSet"),t);
+            p.phoneNumberSet=phoneNumberSet;
+        }
+
+        return p;
     }
 }
