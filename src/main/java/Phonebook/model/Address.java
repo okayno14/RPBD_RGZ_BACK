@@ -41,7 +41,7 @@ public class Address implements Serializable, Comparable<Address>, Cloneable
     //поля - копируем ссылку
     //поля-сущности - глубокая копия
     @Override
-    protected Object clone()
+    public Object clone()
     {
         Address address = new Address();
         address.id = this.id;

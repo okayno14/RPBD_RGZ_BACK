@@ -3,8 +3,14 @@ package Phonebook.view;
 import Phonebook.controller.Controller;
 import Phonebook.controller.Phonebook;
 import Phonebook.model.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.eclipse.jetty.io.WriterOutputStream;
 import org.w3c.dom.ls.LSOutput;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -40,6 +46,17 @@ public class Console extends View
                         {
                             currentPerson = findPerson();
                             drawPerson(currentPerson);
+
+//                            try(FileWriter out = new FileWriter("currentPerson.json"))
+//                            {
+//                                GsonBuilder builder = new GsonBuilder();
+//                                builder.registerTypeAdapter(Street.class,new StreetSerializator());
+//
+//                                String s = builder.create().toJson(currentPerson.getAddress());
+//                                out.write(s);
+//                            }
+//                            catch (Exception f){f.printStackTrace();}
+
                             if (toRunMenuTwo())
                                 pcRun();
                         } catch(Exception e)

@@ -2,20 +2,17 @@ package Phonebook.model;
 import org.hibernate.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.*;
-import org.hibernate.query.*;
 import org.hibernate.query.Query;
 
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 
 public class Model
 {
     private SessionFactory sessionFactory;
     private Configuration configuration;
-    private HashSet<Person> personHashSet;
+    private Map<Integer,Person> personMap;
 
     void connect() throws Throwable
     {
@@ -43,7 +40,7 @@ public class Model
         }
         finally
         {
-            personHashSet = new HashSet<Person>();
+            personMap = new HashMap<Integer,Person>();
         }
     }
 
@@ -75,7 +72,7 @@ public class Model
         }
         finally
         {
-            personHashSet.add(p);
+            personMap.put(p.id,p);
         }
     }
 
@@ -114,8 +111,9 @@ public class Model
                 {
                     Person finded = list.iterator().next();
                     finded.phoneNumberSet.size();
+
                     //finded.address.street.addressSet.size();
-                    personHashSet.add(finded);
+                    personMap.put(finded.id,finded);
 
                     transaction.commit();
                     return finded;
@@ -151,7 +149,11 @@ public class Model
             else
             {
                 Person finded = list.iterator().next();
-                personHashSet.add(finded);
+                finded.phoneNumberSet.size();
+
+                //finded.address.street.addressSet.size();
+
+                personMap.put(finded.id,finded);
                 transaction.commit();
                 return finded;
             }
@@ -187,7 +189,11 @@ public class Model
             else
             {
                 Person finded = list.iterator().next();
-                personHashSet.add(finded);
+
+                finded.phoneNumberSet.size();
+                //finded.address.street.addressSet.size();
+
+                personMap.put(finded.id,finded);
                 transaction.commit();
                 return finded;
             }
@@ -442,6 +448,7 @@ public class Model
     }
 
     private PhoneNumber insert(PhoneNumber pn)
+
     {
         Session session = sessionFactory.getCurrentSession();
 
@@ -532,5 +539,11 @@ public class Model
 
             session.delete(p);
         transaction.commit();
+    }
+
+    //может вернуть null
+    public Person getPerson(int id)
+    {
+        return personMap.get(id);
     }
 }
