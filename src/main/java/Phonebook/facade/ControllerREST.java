@@ -258,23 +258,41 @@ public class ControllerREST
             resp.type("application/json");
             try
             {
-                System.out.println("Звходим в метод");
-                System.out.println(Integer.parseInt(req.params(":id")));
-                System.out.println(repo.getPerson(
-                        Integer.parseInt(req.params(":id"))).getFathername());
                 repo.deleteAddress(
                         repo.getPerson(
                                 Integer.parseInt(req.params(":id"))
                         ));
-                System.out.println("Вызвал удаление");
+                resp.status(200);
                 return builder.create().toJson(new Notification());
+            }
+            catch (SearchException se)
+            {
+                resp.status(404);
+                return builder.create().toJson((new Error("Incorrect id")));
             }
             catch (Exception e)
             {
-                System.out.println(e.getMessage());
-                return builder.create().toJson(new Error("Incorrect id"));
+                resp.status(402);
+                return builder.create().toJson(new Error("Person has no address"));
             }
+        });
 
+        post("/add/phone/:id",(req,resp)->
+        {
+            try
+            {
+                repo.addPhone(
+                        repo.getPerson(Integer.parseInt(req.params(":id"))),
+                        builder.create().fromJson(req.body(),PhoneNumber.class)
+                );
+                resp.status(200);
+                return builder.create().toJson(new Notification());
+            }
+            catch (SearchException se)
+            {
+                resp.status(404);
+                return builder.create().toJson((new Error("Incorrect id")));
+            }
         });
 
     }
