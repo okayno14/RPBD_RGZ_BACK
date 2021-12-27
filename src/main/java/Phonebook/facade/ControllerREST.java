@@ -237,6 +237,7 @@ public class ControllerREST
 
         put("/update/address/:id",(req,resp)->
         {
+            resp.type("application/json");
             try
             {
                 repo.changeAddress(repo.getPerson(Integer.parseInt(req.params(":id"))),
@@ -250,6 +251,30 @@ public class ControllerREST
                 resp.status(404);
                 return builder.create().toJson(new Error("Incorrect id"));
             }
+        });
+
+        delete("/delete/address/:id",(req,resp)->
+        {
+            resp.type("application/json");
+            try
+            {
+                System.out.println("Звходим в метод");
+                System.out.println(Integer.parseInt(req.params(":id")));
+                System.out.println(repo.getPerson(
+                        Integer.parseInt(req.params(":id"))).getFathername());
+                repo.deleteAddress(
+                        repo.getPerson(
+                                Integer.parseInt(req.params(":id"))
+                        ));
+                System.out.println("Вызвал удаление");
+                return builder.create().toJson(new Notification());
+            }
+            catch (Exception e)
+            {
+                System.out.println(e.getMessage());
+                return builder.create().toJson(new Error("Incorrect id"));
+            }
+
         });
 
     }

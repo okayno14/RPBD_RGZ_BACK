@@ -527,12 +527,12 @@ public class Model
             p.deleteAddress();
 
             Iterator<PhoneNumber> i = p.phoneNumberSet.iterator();
-            PhoneNumber elem = null;
-            while (i.hasNext())
-            {
-                elem = i.next();
-                elem.personHashSet.remove(p);
-            }
+//            PhoneNumber elem = null;
+//            while (i.hasNext())
+//            {
+//                elem = i.next();
+//                elem.personHashSet.remove(p);
+//            }
             p.phoneNumberSet.clear();
 
             session.update(p);

@@ -24,7 +24,7 @@ public class Address implements Serializable, Comparable<Address>, Cloneable
     public Address(Street street, int home, int app)
     {
         this.street=street;
-        street.addressSet.add(this);
+        //street.addressSet.add(this);
         this.home=home;
         this.appartement=app;
 
@@ -69,7 +69,7 @@ public class Address implements Serializable, Comparable<Address>, Cloneable
     public Street getStreet() {return (Street) street.clone();}
     void deleteStreet()
     {
-        street.addressSet.remove(this);
+        //street.addressSet.remove(this);
         street = null;
     }
     @Override
