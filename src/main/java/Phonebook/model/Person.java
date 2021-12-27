@@ -108,7 +108,6 @@ public class Person implements Serializable, Comparable<Person>
     void addPhoneNumber(PhoneNumber pn)
     {
         phoneNumberSet.add(pn);
-        //pn.personHashSet.add(this);
     }
 
     public void setPhoneNumber(int pos, PhoneNumber pn)
@@ -121,21 +120,18 @@ public class Person implements Serializable, Comparable<Person>
     {
         Iterator<PhoneNumber> i = findElem(pos);
         PhoneNumber toDel = i.next();
-        //toDel.personHashSet.remove(this);
         i.remove();
     }
 
     public void setAddress(Address address)
     {
         this.address=address;
-        //address.personHashSet.add(this);
     }
 
     public void deleteAddress()
     {
         if(address != null)
         {
-            //address.personHashSet.remove(this);
             address = null;
         }
     }

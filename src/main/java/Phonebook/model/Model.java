@@ -110,11 +110,7 @@ public class Model
                 else
                 {
                     Person finded = list.iterator().next();
-                    //finded.phoneNumberSet.size();
-
-                    //finded.address.street.addressSet.size();
                     personMap.put(finded.id,finded);
-
                     transaction.commit();
                     return finded;
                 }
@@ -149,10 +145,6 @@ public class Model
             else
             {
                 Person finded = list.iterator().next();
-                //finded.phoneNumberSet.size();
-
-                //finded.address.street.addressSet.size();
-
                 personMap.put(finded.id,finded);
                 transaction.commit();
                 return finded;
@@ -189,10 +181,6 @@ public class Model
             else
             {
                 Person finded = list.iterator().next();
-
-                //finded.phoneNumberSet.size();
-                //finded.address.street.addressSet.size();
-
                 personMap.put(finded.id,finded);
                 transaction.commit();
                 return finded;
@@ -212,12 +200,6 @@ public class Model
             q.setParameter("first", firstName);
             q.setParameter("father", fatherName);
             List<Person> result = q.getResultList();
-
-            //цикл инициализации коллекции телефонов
-//            Iterator<Person> i = result.iterator();
-//            while(i.hasNext())
-//                i.next().phoneNumberSet.size();
-
         transaction.commit();
         return result;
     }
@@ -242,12 +224,6 @@ public class Model
 
             Query q = session.createQuery(hql.toString());
             List<Person> res = q.getResultList();
-
-            //цикл инициализации коллекции телефонов
-//            Iterator<Person> i = res.iterator();
-//            while(i.hasNext())
-//                i.next().phoneNumberSet.size();
-
         transaction.commit();
         return res;
     }
@@ -369,7 +345,6 @@ public class Model
             {
                 Address buf = p.address;
                 p.deleteAddress();
-                //p.address.personHashSet.remove(p);
                 p.address = update(buf,add);
             }
             else
@@ -439,7 +414,6 @@ public class Model
     private void delete(Address add)
     {
         Session session = sessionFactory.getCurrentSession();
-        //add.street.addressSet.remove(add);
         Street buf = add.street;
         add.deleteStreet();
         if(countReferences(buf)==0)
@@ -527,12 +501,6 @@ public class Model
             p.deleteAddress();
 
             Iterator<PhoneNumber> i = p.phoneNumberSet.iterator();
-//            PhoneNumber elem = null;
-//            while (i.hasNext())
-//            {
-//                elem = i.next();
-//                elem.personHashSet.remove(p);
-//            }
             p.phoneNumberSet.clear();
 
             session.update(p);
