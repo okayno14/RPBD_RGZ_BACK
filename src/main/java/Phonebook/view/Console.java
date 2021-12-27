@@ -378,6 +378,7 @@ public class Console extends View
                 +"----------------| Удаление контакта |-----------\n"
                 +"------------------------------------------------"
         );
-        userInterface.deleteContact(currentPerson);
+        try{userInterface.deleteContact(currentPerson);}
+        catch (SearchException se) {}
     }
 }

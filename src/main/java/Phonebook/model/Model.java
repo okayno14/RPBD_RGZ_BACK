@@ -502,19 +502,19 @@ public class Model
         transaction.commit();
     }
 
-    public void deletePerson(Person p) throws HibernateException
+    public void deletePerson(Person p) throws SearchException
     {
+        if(p.id == -1 || !personMap.containsKey(p.id))
+            throw new SearchException(0);
+
         Session session = sessionFactory.getCurrentSession();
         Transaction transaction = session.beginTransaction();
             Address add = p.address;
             p.deleteAddress();
-
-            Iterator<PhoneNumber> i = p.phoneNumberSet.iterator();
             p.phoneNumberSet.clear();
-
             session.update(p);
-
             session.delete(p);
+            personMap.remove(p);
         transaction.commit();
     }
 

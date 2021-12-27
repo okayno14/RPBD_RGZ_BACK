@@ -326,10 +326,20 @@ public class ControllerREST
                 resp.status(404);
                 return builder.create().toJson(new Error("Incorrect index or pos"));
             }
-            catch (Exception e)
+        });
+
+        delete("/delete/person/:id",(req,resp)->
+        {
+            try
             {
-                e.printStackTrace();
-                return null;
+                repo.deleteContact(repo.getPerson(Integer.parseInt(req.params(":id"))));
+                resp.status(200);
+                return builder.create().toJson(new Notification());
+            }
+            catch (SearchException se)
+            {
+                resp.status(404);
+                return builder.create().toJson(new Error("Incorrect index or element doesn't exist"));
             }
         });
 

@@ -40,7 +40,7 @@ public class Controller implements Phonebook
     }
 
     @Override
-    public void deleteContact(Person p)
+    public void deleteContact(Person p) throws SearchException
     {
         model.deletePerson(p);
     }

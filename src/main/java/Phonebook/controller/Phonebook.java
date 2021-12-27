@@ -13,7 +13,7 @@ import java.util.Set;
 public interface Phonebook {
     Person addContact(String lastName,String firstName,String fatherName);
     void changeContact(Person p,String lastName,String firstName,String fatherName);
-    void deleteContact(Person p);
+    void deleteContact(Person p) throws SearchException;
     void addPhone(Person p, PhoneNumber pn);
     void changePhone(Person p,int pos,PhoneNumber newPn) throws SearchException;
     void deletePhone(Person p, int pos) throws SearchException;
