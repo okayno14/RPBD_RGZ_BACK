@@ -312,6 +312,27 @@ public class ControllerREST
             }
         });
 
+        delete("/delete/phone/:id/:pos",(req,resp)->
+        {
+            try
+            {
+                repo.deletePhone(repo.getPerson(Integer.parseInt(req.params(":id"))),
+                        Integer.parseInt(req.params(":pos")));
+                resp.status(200);
+                return builder.create().toJson(new Notification());
+            }
+            catch (SearchException se)
+            {
+                resp.status(404);
+                return builder.create().toJson(new Error("Incorrect index or pos"));
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                return null;
+            }
+        });
+
     }
 
 
