@@ -297,7 +297,19 @@ public class ControllerREST
 
         put("/update/phone/:id/:pos",(req,resp)->
         {
-            return null;
+            try
+            {
+                repo.changePhone(repo.getPerson(Integer.parseInt(req.params(":id"))),
+                        Integer.parseInt(req.params(":pos")),
+                        builder.create().fromJson(req.body(),PhoneNumber.class));
+                resp.status(200);
+                return builder.create().toJson(new Notification());
+            }
+            catch (SearchException se)
+            {
+                resp.status(404);
+                return builder.create().toJson(new Error("Incorrect index or pos"));
+            }
         });
 
     }
