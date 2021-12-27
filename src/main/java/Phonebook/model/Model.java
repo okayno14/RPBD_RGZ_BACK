@@ -110,7 +110,7 @@ public class Model
                 else
                 {
                     Person finded = list.iterator().next();
-                    finded.phoneNumberSet.size();
+                    //finded.phoneNumberSet.size();
 
                     //finded.address.street.addressSet.size();
                     personMap.put(finded.id,finded);
@@ -149,7 +149,7 @@ public class Model
             else
             {
                 Person finded = list.iterator().next();
-                finded.phoneNumberSet.size();
+                //finded.phoneNumberSet.size();
 
                 //finded.address.street.addressSet.size();
 
@@ -190,7 +190,7 @@ public class Model
             {
                 Person finded = list.iterator().next();
 
-                finded.phoneNumberSet.size();
+                //finded.phoneNumberSet.size();
                 //finded.address.street.addressSet.size();
 
                 personMap.put(finded.id,finded);
@@ -214,9 +214,9 @@ public class Model
             List<Person> result = q.getResultList();
 
             //цикл инициализации коллекции телефонов
-            Iterator<Person> i = result.iterator();
-            while(i.hasNext())
-                i.next().phoneNumberSet.size();
+//            Iterator<Person> i = result.iterator();
+//            while(i.hasNext())
+//                i.next().phoneNumberSet.size();
 
         transaction.commit();
         return result;
@@ -244,9 +244,9 @@ public class Model
             List<Person> res = q.getResultList();
 
             //цикл инициализации коллекции телефонов
-            Iterator<Person> i = res.iterator();
-            while(i.hasNext())
-                i.next().phoneNumberSet.size();
+//            Iterator<Person> i = res.iterator();
+//            while(i.hasNext())
+//                i.next().phoneNumberSet.size();
 
         transaction.commit();
         return res;

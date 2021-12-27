@@ -22,7 +22,7 @@ public class Person implements Serializable, Comparable<Person>
     @JoinColumn(name = "idaddress", referencedColumnName = "id")
     Address address;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "persone_number",
     joinColumns = {@JoinColumn(name = "idperson")},
     inverseJoinColumns = {@JoinColumn(name = "idphone")})
