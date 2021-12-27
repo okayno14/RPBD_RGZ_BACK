@@ -91,7 +91,7 @@ public class Person implements Serializable, Comparable<Person>
         else return false;
     }
 
-    Iterator<PhoneNumber> findElem(int pos)
+    Iterator<PhoneNumber> findElem(int pos) throws SearchException
     {
         Iterator<PhoneNumber> i = phoneNumberSet.iterator();
         int j=0;
@@ -102,6 +102,9 @@ public class Person implements Serializable, Comparable<Person>
             i.next();
         }
 
+        if(pos != j || pos<0)
+            throw new SearchException(0);
+
         return i;
     }
 
@@ -110,13 +113,13 @@ public class Person implements Serializable, Comparable<Person>
         phoneNumberSet.add(pn);
     }
 
-    public void setPhoneNumber(int pos, PhoneNumber pn)
+    public void setPhoneNumber(int pos, PhoneNumber pn) throws SearchException
     {
         deletePhone(pos);
         addPhoneNumber(pn);
     }
 
-    public void deletePhone(int pos)
+    public void deletePhone(int pos) throws SearchException
     {
         Iterator<PhoneNumber> i = findElem(pos);
         PhoneNumber toDel = i.next();

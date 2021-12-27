@@ -51,13 +51,13 @@ public class Controller implements Phonebook
     }
 
     @Override
-    public void changePhone(Person p, int pos, PhoneNumber newPn)
+    public void changePhone(Person p, int pos, PhoneNumber newPn) throws SearchException
     {
         model.changePhone(p,pos,newPn);
     }
 
     @Override
-    public void deletePhone(Person p, int pos)
+    public void deletePhone(Person p, int pos) throws SearchException
     {
         model.deletePhone(p,pos);
     }

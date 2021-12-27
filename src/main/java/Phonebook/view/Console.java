@@ -350,7 +350,10 @@ public class Console extends View
         String number = get_a_Number();
         int type = get_a_type();
         PhoneNumber phoneNumberNew = new PhoneNumber(new PhoneType(type),number);
-        userInterface.changePhone(currentPerson,pos,phoneNumberNew);
+        try{userInterface.changePhone(currentPerson,pos,phoneNumberNew);}
+        catch (SearchException se) {}
+
+
     }
 
     private void deletePhone(){
@@ -366,7 +369,8 @@ public class Console extends View
             System.out.println("Введите индекс удаляемого телефона");
             pos = in.nextInt();
         }
-        userInterface.deletePhone(currentPerson,pos);
+        try{userInterface.deletePhone(currentPerson,pos);}
+        catch (SearchException se) {}
     }
     private void deleteContact(){
         System.out.println(

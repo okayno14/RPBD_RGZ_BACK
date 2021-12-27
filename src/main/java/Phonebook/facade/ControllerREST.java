@@ -295,6 +295,11 @@ public class ControllerREST
             }
         });
 
+        put("/update/phone/:id/:pos",(req,resp)->
+        {
+            return null;
+        });
+
     }
 
 

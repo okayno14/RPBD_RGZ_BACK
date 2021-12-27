@@ -379,35 +379,44 @@ public class Model
         transaction.commit();
     }
 
-    public void changePhone(Person p, int pos, PhoneNumber new_)
+    public void changePhone(Person p, int pos, PhoneNumber new_) throws SearchException
     {
-        Session session = sessionFactory.getCurrentSession();
-        Transaction transaction = session.beginTransaction();
+        try
+        {
             PhoneNumber buf = p.findElem(pos).next();
-
+            Session session = sessionFactory.getCurrentSession();
+            Transaction transaction = session.beginTransaction();
             p.setPhoneNumber(pos,new_);
             session.update(p);
-
             update(buf,new_);
-
-
             if(countReferences(buf)==0)
                 delete(buf);
-
-
-        transaction.commit();
+            transaction.commit();
+        }
+        catch (SearchException se)
+        {
+            throw se;
+        }
     }
 
-    public void deletePhone(Person p, int pos)
+    public void deletePhone(Person p, int pos) throws SearchException
     {
-        Session session = sessionFactory.getCurrentSession();
-        Transaction transaction = session.beginTransaction();
+        try
+        {
             PhoneNumber buf = p.findElem(pos).next();
-            p.deletePhone(pos);
-            session.update(p);
-            if(countReferences(buf)==0)
-                delete(buf);
-        transaction.commit();
+
+            Session session = sessionFactory.getCurrentSession();
+            Transaction transaction = session.beginTransaction();
+                p.deletePhone(pos);
+                session.update(p);
+                if(countReferences(buf)==0)
+                    delete(buf);
+            transaction.commit();
+        }
+        catch (SearchException se)
+        {
+            throw se;
+        }
     }
 
     //используется в контексте обновления контакта
