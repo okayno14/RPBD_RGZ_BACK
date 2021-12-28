@@ -1,0 +1,858 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Phonebook",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://192.168.1.92:4567"
+    }
+  ],
+  "paths": {
+    "/add/person": {
+      "post": {
+        "description": "Добавления контакта",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/insertUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/id"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/find/person/{lastname}/{firstname}/{fathername}/empty": {
+      "get": {
+        "description": "Поиск по ФИО пустого или непустого контакта",
+        "responses": {
+          "200": {
+            "description": "Объект найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/person"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Есть ещё экземпляры",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/err"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Не найдено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/err"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/lastname"
+        },
+        {
+          "$ref": "#/components/parameters/firstname"
+        },
+        {
+          "$ref": "#/components/parameters/fathername"
+        }
+      ]
+    },
+    "/find/person/{lastname}/{firstname}/{fathername}/{pn}/{type}": {
+      "get": {
+        "description": "Поиск контакта по фио и телефону",
+        "responses": {
+          "200": {
+            "description": "Объект найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/person"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Есть ещё экземпляры",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/err"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Не найдено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/err"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/lastname"
+          },
+          {
+            "$ref": "#/components/parameters/firstname"
+          },
+          {
+            "$ref": "#/components/parameters/fathername"
+          },
+          {
+            "$ref": "#/components/parameters/pn"
+          },
+          {
+            "$ref": "#/components/parameters/type"
+          }
+        ]
+      }
+    },
+    "/find/person/{lastname}/{firstname}/{fathername}/{pn}/{type}/{home}/{appartement}/{streetname}": {
+      "get": {
+        "description": "Поиск контакта по фио, телефону, адресу",
+        "responses": {
+          "200": {
+            "description": "Объект найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/person"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Есть ещё экзепляры",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/err"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Не найдено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/err"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/lastname"
+          },
+          {
+            "$ref": "#/components/parameters/firstname"
+          },
+          {
+            "$ref": "#/components/parameters/fathername"
+          },
+          {
+            "$ref": "#/components/parameters/pn"
+          },
+          {
+            "$ref": "#/components/parameters/type"
+          },
+          {
+            "$ref": "#/components/parameters/home"
+          },
+          {
+            "$ref": "#/components/parameters/appartement"
+          },
+          {
+            "$ref": "#/components/parameters/streetname"
+          }
+        ]
+      }
+    },
+    "/find/person/{lastname}/{firstname}/{fathername}/list": {
+      "get": {
+        "description": "Вывод всех контактов по ФИО",
+        "responses": {
+          "200": {
+            "description": "Коллекция не пустая",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/personList"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Коллекция пустая",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/err"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/lastname"
+          },
+          {
+            "$ref": "#/components/parameters/firstname"
+          },
+          {
+            "$ref": "#/components/parameters/fathername"
+          }
+        ]
+      }
+    },
+    "/find/person/{a}/{b}/{c}/{d}": {
+      "get": {
+        "description": "Поиск контактов по последним 4-м цифрам номера",
+        "responses": {
+          "200": {
+            "description": "Коллекция не пустая",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/personList"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Коллекция пустая",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/err"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/a"
+        },
+        {
+          "$ref": "#/components/parameters/b"
+        },
+        {
+          "$ref": "#/components/parameters/c"
+        },
+        {
+          "$ref": "#/components/parameters/d"
+        }
+      ]
+    },
+    "/update/address/{id}": {
+      "put": {
+        "description": "Добавление/изменение адреса у заданного контакта",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/address"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Контакт модифицирован",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/notification"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Некорректный id. Объекта либо нет в коллекции, либо неправильный формат идентификатора.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/err"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ]
+      }
+    },
+    "/delete/address/{id}": {
+      "delete": {
+        "description": "Удаление адреса у заданного контакта.",
+        "responses": {
+          "200": {
+            "description": "Контакт модифицирован",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/notification"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "У контакта не было адреса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/err"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Некорректный id. Объекта либо нет в коллекции, либо неправильный формат идентификатора.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/err"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ]
+      }
+    },
+    "/add/phone/{id}": {
+      "post": {
+        "description": "Добавление телефона заданному контакту",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/phoneNumber"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Контакт модифицирован",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/notification"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Некорректный id. Объекта либо нет в коллекции, либо неправильный формат идентификатора.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/err"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ]
+      }
+    },
+    "/update/phone/{id}/{pos}": {
+      "put": {
+        "description": "Обновление заданного телефона у заданного контакта",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/phoneNumber"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Контакт модифицирован",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/notification"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Некорректный идентификатор или индекс телефона",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/err"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/pos"
+          }
+        ]
+      }
+    },
+    "/delete/phone/{id}/{pos}": {
+      "delete": {
+        "description": "Удаление заданного телефона у заданного контакта",
+        "responses": {
+          "200": {
+            "description": "Контакт модифицирован",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/notification"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Некорректный идентификатор или индекс телефона",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/err"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/pos"
+          }
+        ]
+      }
+    },
+    "/delete/person/{id}": {
+      "delete": {
+        "description": "Удаление контакта",
+        "responses": {
+          "200": {
+            "description": "Контакт удалён",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/notification"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Некорректный идентификатор или контакта нет в коллекции",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/err"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "lastname": {
+        "name": "lastname",
+        "in": "path",
+        "description": "Фамилия",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "firstname": {
+        "name": "firstname",
+        "in": "path",
+        "description": "Имя",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "fathername": {
+        "name": "fathername",
+        "in": "path",
+        "description": "Отчество",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "pn": {
+        "name": "pn",
+        "in": "path",
+        "description": "Номер телефона",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "type": {
+        "name": "type",
+        "in": "path",
+        "description": "Тип телефона",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        }
+      },
+      "home": {
+        "name": "home",
+        "in": "path",
+        "description": "Номер дома",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "appartement": {
+        "name": "appartement",
+        "in": "path",
+        "description": "Номер квартиры",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "streetname": {
+        "name": "streetname",
+        "in": "path",
+        "description": "Улица",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "a": {
+        "name": "a",
+        "in": "path",
+        "description": "цифра1",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9
+        }
+      },
+      "b": {
+        "name": "b",
+        "in": "path",
+        "description": "цифра2",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9
+        }
+      },
+      "c": {
+        "name": "c",
+        "in": "path",
+        "description": "цифра3",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9
+        }
+      },
+      "d": {
+        "name": "d",
+        "in": "path",
+        "description": "цифра4",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9
+        }
+      },
+      "id": {
+        "name": "id",
+        "in": "path",
+        "description": "Идентификатор контакта. Используется только для внутренних нужд системы.",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "pos": {
+        "name": "pos",
+        "in": "path",
+        "description": "Позиция телефона в списке контакта",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "schemas": {
+      "phoneNumber": {
+        "properties": {
+          "number": {
+            "type": "string"
+          },
+          "phoneType": {
+            "properties": {
+              "id": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "address": {
+        "properties": {
+          "home": {
+            "type": "integer"
+          },
+          "appartement": {
+            "type": "integer"
+          },
+          "street": {
+            "properties": {
+              "streetname": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "notification": {
+        "properties": {
+          "status": {
+            "type": "integer"
+          }
+        }
+      },
+      "insertUser": {
+        "properties": {
+          "lastname": {
+            "type": "string"
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "fathername": {
+            "type": "string"
+          }
+        }
+      },
+      "id": {
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "data": {
+            "properties": {
+              "id": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "err": {
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "person": {
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "data": {
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "lastname": {
+                "type": "string"
+              },
+              "firstname": {
+                "type": "string"
+              },
+              "fathername": {
+                "type": "string"
+              },
+              "address": {
+                "properties": {
+                  "home": {
+                    "type": "integer"
+                  },
+                  "appartement": {
+                    "type": "integer"
+                  },
+                  "street": {
+                    "properties": {
+                      "streetname": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "phoneNumberSet": {
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "number": {
+                      "type": "string"
+                    },
+                    "phoneType": {
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "personList": {
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "lastname": {
+                  "type": "string"
+                },
+                "firstname": {
+                  "type": "string"
+                },
+                "fathername": {
+                  "type": "string"
+                },
+                "address": {
+                  "properties": {
+                    "home": {
+                      "type": "integer"
+                    },
+                    "appartement": {
+                      "type": "integer"
+                    },
+                    "street": {
+                      "properties": {
+                        "streetname": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "phoneNumberSet": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "number": {
+                        "type": "string"
+                      },
+                      "phoneType": {
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
