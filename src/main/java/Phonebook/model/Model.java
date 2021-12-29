@@ -524,6 +524,21 @@ public class Model
         if (personMap.containsKey(id))
             return personMap.get(id);
         else
-            throw new SearchException(0);
+            {
+                Session session = sessionFactory.getCurrentSession();
+                Transaction transaction = session.beginTransaction();
+                    Person res = session.get(Person.class,id);
+                    if(res==null)
+                    {
+                        transaction.commit();
+                        throw new SearchException(0);
+                    }
+                    else
+                    {
+                        personMap.put(id,res);
+                        transaction.commit();
+                        return res;
+                    }
+            }
     }
 }
