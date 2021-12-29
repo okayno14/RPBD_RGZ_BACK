@@ -349,6 +349,22 @@ public class ControllerREST
             }
         });
 
+        put("/update/person/:lastname/:firstname/:fathername/:id",(req,resp)->
+        {
+            try
+            {
+                repo.changeContact(repo.getPerson(Integer.parseInt(req.params(":id"))),
+                        req.params(":lastname"),
+                        req.params(":firstname"),
+                        req.params(":fathername"));
+                return builder.create().toJson(new Notification());
+            }
+            catch (SearchException se)
+            {
+                return builder.create().toJson(new Error("Incorrect id"));
+            }
+        });
+
         delete("/delete/person/:id",(req,resp)->
         {
             try
@@ -363,7 +379,6 @@ public class ControllerREST
                 return builder.create().toJson(new Error("Incorrect index or element doesn't exist"));
             }
         });
-
     }
 
 
