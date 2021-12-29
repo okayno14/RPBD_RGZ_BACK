@@ -224,6 +224,10 @@ public class Model
 
             Query q = session.createQuery(hql.toString());
             List<Person> res = q.getResultList();
+
+            if (!res.isEmpty())
+                res.forEach(p-> {session.refresh(p);});
+
         transaction.commit();
         return res;
     }
@@ -356,6 +360,7 @@ public class Model
 
     public void deleteAddress(Person p) throws Exception
     {
+
         if(p.address!=null)
         {
             Session session = sessionFactory.getCurrentSession();
@@ -367,7 +372,7 @@ public class Model
                     delete(buf);
             transaction.commit();
         }
-        else throw  new Exception("У контакта нет адреса");
+        else throw new Exception("У контакта нет адреса");
     }
     /*Методы обновления Person, связанные с телефонами*/
     public void addPhone(Person p, PhoneNumber pn)
